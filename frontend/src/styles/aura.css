@@ -1,0 +1,17 @@
+.aura-ring__glow {
+  animation: auraPulse 2.6s ease-in-out infinite;
+}
+
+@keyframes auraPulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+
+.aura-ring__spin {
+  animation: auraSpin 6s linear infinite;
+}
+
+@keyframes auraSpin {
+  from { transform: rotate(-90deg); }
+  to { transform: rotate(270deg); }
+}
