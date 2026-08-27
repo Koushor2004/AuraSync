@@ -1,10 +1,9 @@
 :root {
-  /* ---- Brand ---- */
+
   --brand: #6C63FF;
   --brand-light: #9D97FF;
   --brand-dark: #4B44CC;
 
-  /* ---- Emotion palette (kept in sync with backend/config/emotions.js) ---- */
   --e-happy: #F5C242;
   --e-sad: #4A90D9;
   --e-angry: #E5484D;
@@ -15,12 +14,11 @@
   --e-excited: #EC4899;
   --e-relaxed: #2DD4BF;
 
-  /* ---- Type ---- */
   --font-display: 'Space Grotesk', 'Inter', sans-serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', 'SFMono-Regular', monospace;
 
-  /* ---- Radius / motion ---- */
+
   --radius-sm: 8px;
   --radius-md: 14px;
   --radius-lg: 20px;
@@ -28,7 +26,6 @@
   --dur: 220ms;
 }
 
-/* ---------- Dark theme (default) ---------- */
 :root,
 [data-theme='dark'] {
   --bg: #0F1117;
@@ -45,7 +42,6 @@
   --overlay: rgba(10, 11, 16, 0.72);
 }
 
-/* ---------- Light theme ---------- */
 [data-theme='light'] {
   --bg: #F6F6FB;
   --bg-elevated: #FFFFFF;
@@ -83,7 +79,10 @@ body {
   min-height: 100vh;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
   font-family: var(--font-display);
   margin: 0;
   letter-spacing: -0.02em;
@@ -107,24 +106,36 @@ button {
   color: white;
 }
 
-/* Visible keyboard focus */
+
 :focus-visible {
   outline: 2px solid var(--brand-light);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 ::-webkit-scrollbar-thumb {
   background: var(--border-strong);
   border-radius: 8px;
 }
-::-webkit-scrollbar-thumb:hover { background: var(--text-faint); }
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-faint);
+}
 
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

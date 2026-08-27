@@ -8,14 +8,11 @@ const { EMOTIONS, EMOTION_KEYS } = require('../config/emotions');
 
 const router = express.Router();
 
-// @route  GET /api/emotion/meta  (public metadata: colors/emoji/labels)
 router.get('/meta', (req, res) => {
   res.json({ success: true, emotions: EMOTIONS });
 });
 
-// @route  POST /api/emotion/log
-router.post(
-  '/log',
+router.post('/log',
   protect,
   [
     body('emotion').isIn(EMOTION_KEYS).withMessage('Unknown emotion'),
@@ -42,9 +39,7 @@ router.post(
   })
 );
 
-// @route  GET /api/emotion/history?limit=20
-router.get(
-  '/history',
+router.get('/history',
   protect,
   asyncHandler(async (req, res) => {
     const limit = Math.min(Number(req.query.limit) || 20, 200);

@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useTheme } from '../context/ThemeContext.jsx';
+import { usePlayer } from '../context/PlayerContext.jsx';
 import './AppLayout.css';
 
 const NAV_ITEMS = [
@@ -16,9 +17,27 @@ export default function AppLayout({ children }) {
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
+  const {
+    currentTrack,
+    isPlaying,
+    progress,
+    currentTime,
+    duration,
+    playTrack,
+    pauseTrack,
+    seek
+  } = usePlayer();
+
   const handleLogout = async () => {
     await logout();
     navigate('/login');
+  };
+
+  const formatTime = (secs) => {
+    if (isNaN(secs)) return '0:00';
+    const m = Math.floor(secs / 60);
+    const s = Math.floor(secs % 60);
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
   };
 
   return (
@@ -66,12 +85,52 @@ export default function AppLayout({ children }) {
         </div>
       </aside>
 
-      <div className="main-area">{children}</div>
+      <div className="main-area">
+        {children}
+
+        {currentTrack && (
+          <div className="audio-player-bar">
+            <div className="audio-player-bar__info">
+              {currentTrack.albumArt ? (
+                <img src={currentTrack.albumArt} alt="" className="audio-player-bar__art" />
+              ) : (
+                <div className="audio-player-bar__art-placeholder" />
+              )}
+              <div className="audio-player-bar__meta">
+                <span className="audio-player-bar__name">{currentTrack.name}</span>
+                <span className="audio-player-bar__artist">{currentTrack.artists}</span>
+              </div>
+            </div>
+
+            <div className="audio-player-bar__controls">
+              <button className="audio-player-bar__btn" onClick={() => playTrack(currentTrack)}>
+                {isPlaying ? <IconPauseBar /> : <IconPlayBar />}
+              </button>
+
+              <div className="audio-player-bar__progress-container">
+                <span className="audio-player-bar__time">{formatTime(currentTime)}</span>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={progress}
+                  onChange={(e) => seek(Number(e.target.value))}
+                  className="audio-player-bar__slider"
+                />
+                <span className="audio-player-bar__time">{formatTime(duration)}</span>
+              </div>
+            </div>
+
+            <button className="audio-player-bar__close" onClick={pauseTrack}>
+              <IconCloseBar />
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
-/* ---- Inline icon set (no external icon dependency) ---- */
 function IconGrid() {
   return (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -120,3 +179,30 @@ function IconMoon() {
     </svg>
   );
 }
+
+function IconPlayBar() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M8 5v14l11-7z" />
+    </svg>
+  );
+}
+
+function IconPauseBar() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
+    </svg>
+  );
+}
+
+function IconCloseBar() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  );
+}
+
+

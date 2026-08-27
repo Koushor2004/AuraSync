@@ -1,10 +1,5 @@
 import React, { useId } from 'react';
 
-/**
- * AuraRing — AuraSync's signature visual: a glowing progress ring whose color
- * carries the current emotion and whose arc length reflects detection
- * confidence. Used on the dashboard avatar, camera overlay, and loading state.
- */
 export default function AuraRing({
   color = 'var(--brand)',
   size = 120,

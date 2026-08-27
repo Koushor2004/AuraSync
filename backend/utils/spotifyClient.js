@@ -11,7 +11,6 @@ const basicAuthHeader = () => {
   return `Basic ${creds}`;
 };
 
-// Exchanges the OAuth authorization code for access/refresh tokens
 async function exchangeCodeForToken(code) {
   const params = new URLSearchParams({
     grant_type: 'authorization_code',
@@ -24,7 +23,7 @@ async function exchangeCodeForToken(code) {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   });
-  return data; // { access_token, refresh_token, expires_in, ... }
+  return data;
 }
 
 async function refreshAccessToken(refreshToken) {
@@ -38,7 +37,7 @@ async function refreshAccessToken(refreshToken) {
       'Content-Type': 'application/x-www-form-urlencoded',
     },
   });
-  return data; // { access_token, expires_in, ... }
+  return data;
 }
 
 async function getSpotifyProfile(accessToken) {
@@ -48,9 +47,20 @@ async function getSpotifyProfile(accessToken) {
   return data;
 }
 
-// Uses the recommendations endpoint seeded with mood-mapped audio features
-async function getRecommendationsForMood(accessToken, emotion, limit = 12) {
-  const params = MOOD_TO_SPOTIFY_PARAMS[emotion] || MOOD_TO_SPOTIFY_PARAMS.neutral;
+async function getRecommendationsForMood(accessToken, emotion, limit = 12, market) {
+  const params = { ...MOOD_TO_SPOTIFY_PARAMS[emotion] || MOOD_TO_SPOTIFY_PARAMS.neutral };
+  if (market) params.market = market;
+
+  if (market === 'IN') {
+    params.seed_genres = 'indian,bollywood';
+  } else if (market === 'JP') {
+    params.seed_genres = 'j-pop,j-rock';
+  } else if (market === 'KR') {
+    params.seed_genres = 'k-pop';
+  } else if (market === 'ES') {
+    params.seed_genres = 'latin,spanish';
+  }
+
   const { data } = await axios.get(`${SPOTIFY_API_URL}/recommendations`, {
     headers: { Authorization: `Bearer ${accessToken}` },
     params: { limit, ...params },
@@ -58,10 +68,13 @@ async function getRecommendationsForMood(accessToken, emotion, limit = 12) {
   return data.tracks.map(mapTrack);
 }
 
-async function searchTracks(accessToken, query, limit = 15) {
+async function searchTracks(accessToken, query, limit = 10, market) {
+  const params = { q: query, type: 'track', limit };
+  if (market) params.market = market;
+
   const { data } = await axios.get(`${SPOTIFY_API_URL}/search`, {
     headers: { Authorization: `Bearer ${accessToken}` },
-    params: { q: query, type: 'track', limit },
+    params,
   });
   return data.tracks.items.map(mapTrack);
 }
@@ -84,13 +97,34 @@ async function addTracksToPlaylist(accessToken, playlistId, uris) {
   return data;
 }
 
+const FALLBACK_PREVIEWS = [
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3',
+  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
+];
+
+function getFallbackPreview(spotifyId) {
+  if (!spotifyId) return FALLBACK_PREVIEWS[0];
+  let hash = 0;
+  for (let i = 0; i < spotifyId.length; i++) {
+    hash = spotifyId.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const index = Math.abs(hash) % FALLBACK_PREVIEWS.length;
+  return FALLBACK_PREVIEWS[index];
+}
+
 function mapTrack(t) {
   return {
     spotifyId: t.id,
     name: t.name,
     artists: (t.artists || []).map((a) => a.name).join(', '),
     albumArt: t.album?.images?.[0]?.url || null,
-    previewUrl: t.preview_url,
+    previewUrl: t.preview_url || getFallbackPreview(t.id),
     externalUrl: t.external_urls?.spotify,
   };
 }

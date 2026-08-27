@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const asyncHandler = require('express-async-handler');
 const User = require('../models/User');
 
-// Reads JWT from httpOnly cookie first, falls back to Authorization header
 const protect = asyncHandler(async (req, res, next) => {
   let token = null;
 

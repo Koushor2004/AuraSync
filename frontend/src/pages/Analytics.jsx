@@ -125,14 +125,16 @@ export default function Analytics() {
           <div className="card">
             <div className="card-title">Weekly emotion frequency</div>
             {weeklyData.length ? (
-              <Bar
-                data={{
-                  labels: weeklyLabels,
-                  datasets: [{ label: 'Scans', data: weeklyData, backgroundColor: weeklyColors, borderRadius: 6 }],
-                }}
-                options={chartOptions()}
-                height={220}
-              />
+              <div style={{ maxWidth: 500, margin: '0 auto', height: 220 }}>
+                <Bar
+                  data={{
+                    labels: weeklyLabels,
+                    datasets: [{ label: 'Scans', data: weeklyData, backgroundColor: weeklyColors, borderRadius: 6 }],
+                  }}
+                  options={chartOptions()}
+                  height={220}
+                />
+              </div>
             ) : (
               <EmptyChart label="No scans in the last 7 days" />
             )}
@@ -157,21 +159,26 @@ export default function Analytics() {
 
           <div className="card">
             <div className="card-title">Monthly mood trend</div>
-            {monthlyDatasets.length ? (
-              <Line data={{ labels: months, datasets: monthlyDatasets }} options={chartOptions()} height={220} />
-            ) : (
-              <EmptyChart label="No history in the last 6 months" />
-            )}
+            <div style={{ maxWidth: 500, margin: '0 auto', height: 220 }}>
+              {monthlyDatasets.length ? (
+
+                <Line data={{ labels: months, datasets: monthlyDatasets }} options={chartOptions()} height={220} />
+              ) : (
+                <EmptyChart label="No history in the last 6 months" />
+              )}
+            </div>
           </div>
 
           <div className="card">
             <div className="card-title">Music genre distribution</div>
             {genreData.length ? (
-              <Doughnut
-                data={{ labels: genreLabels, datasets: [{ data: genreData, backgroundColor: genreColors }] }}
-                options={{ ...chartOptions(), plugins: { legend: { position: 'bottom', labels: { color: textColor() } } } }}
-                height={220}
-              />
+              <div style={{ maxWidth: 500, margin: '0 auto', height: 220 }}>
+                <Doughnut
+                  data={{ labels: genreLabels, datasets: [{ data: genreData, backgroundColor: genreColors }] }}
+                  options={{ ...chartOptions(), plugins: { legend: { position: 'bottom', labels: { color: textColor() } } } }}
+                  height={220}
+                />
+              </div>
             ) : (
               <EmptyChart label="Generate playlists to see genre spread" />
             )}

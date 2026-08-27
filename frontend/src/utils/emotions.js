@@ -1,5 +1,4 @@
-// Mirrors backend/config/emotions.js so the UI can render instantly
-// without waiting on a network round trip.
+
 export const EMOTIONS = {
   happy: { emoji: '😄', color: 'var(--e-happy)', label: 'Happy' },
   sad: { emoji: '😔', color: 'var(--e-sad)', label: 'Sad' },
@@ -12,7 +11,7 @@ export const EMOTIONS = {
   relaxed: { emoji: '😌', color: 'var(--e-relaxed)', label: 'Relaxed' },
 };
 
-// face-api.js expression labels -> our canon keys
+
 export const FACE_API_TO_EMOTION = {
   happy: 'happy',
   sad: 'sad',
@@ -23,7 +22,6 @@ export const FACE_API_TO_EMOTION = {
   disgusted: 'disgusted',
 };
 
-// Emotions available for manual selection (camera can only detect the 7 above)
 export const MANUAL_EMOTIONS = ['happy', 'sad', 'angry', 'fearful', 'neutral', 'excited', 'relaxed'];
 
 export function resolvedColor(varString) {

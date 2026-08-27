@@ -6,9 +6,8 @@ const validate = require('../middleware/validate');
 
 const router = express.Router();
 
-// @route  PATCH /api/user/theme
-router.patch(
-  '/theme',
+
+router.patch('/theme',
   protect,
   [body('theme').isIn(['dark', 'light']).withMessage('Theme must be dark or light')],
   validate,
@@ -19,9 +18,7 @@ router.patch(
   })
 );
 
-// @route  PATCH /api/user/profile
-router.patch(
-  '/profile',
+router.patch('/profile',
   protect,
   [body('name').optional().trim().isLength({ min: 2, max: 60 })],
   validate,

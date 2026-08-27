@@ -8,9 +8,7 @@ const { generateToken, sendTokenCookie } = require('../utils/generateToken');
 
 const router = express.Router();
 
-// @route  POST /api/auth/register
-router.post(
-  '/register',
+router.post('/register',
   [
     body('name').trim().isLength({ min: 2, max: 60 }).withMessage('Name must be 2-60 characters'),
     body('email').isEmail().withMessage('A valid email is required').normalizeEmail(),
@@ -38,9 +36,8 @@ router.post(
   })
 );
 
-// @route  POST /api/auth/login
-router.post(
-  '/login',
+
+router.post('/login',
   [
     body('email').isEmail().withMessage('A valid email is required').normalizeEmail(),
     body('password').notEmpty().withMessage('Password is required'),
@@ -65,24 +62,20 @@ router.post(
   })
 );
 
-// @route  POST /api/auth/logout
+
 router.post('/logout', (req, res) => {
   res.clearCookie('token');
   res.json({ success: true, message: 'Logged out' });
 });
 
-// @route  GET /api/auth/me
-router.get(
-  '/me',
+router.get('/me',
   protect,
   asyncHandler(async (req, res) => {
     res.json({ success: true, user: req.user.toSafeObject() });
   })
 );
 
-// @route  DELETE /api/auth/account
-router.delete(
-  '/account',
+router.delete('/account',
   protect,
   asyncHandler(async (req, res) => {
     const EmotionLog = require('../models/EmotionLog');

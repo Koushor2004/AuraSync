@@ -6,8 +6,6 @@ const Playlist = require('../models/Playlist');
 
 const router = express.Router();
 
-// @route  GET /api/analytics/summary
-// Returns weekly frequency, monthly trend, most common emotion, genre distribution
 router.get(
   '/summary',
   protect,
@@ -18,13 +16,11 @@ router.get(
     const sixMonthsAgo = new Date(now.getFullYear(), now.getMonth() - 5, 1);
 
     const [weekly, monthly, mostCommon, genrePlaylists] = await Promise.all([
-      // Weekly emotion frequency (last 7 days, grouped by emotion)
       EmotionLog.aggregate([
         { $match: { user: userId, createdAt: { $gte: sevenDaysAgo } } },
         { $group: { _id: '$emotion', count: { $sum: 1 } } },
         { $sort: { count: -1 } },
       ]),
-      // Monthly mood trend (last 6 months, grouped by month + emotion)
       EmotionLog.aggregate([
         { $match: { user: userId, createdAt: { $gte: sixMonthsAgo } } },
         {
@@ -48,7 +44,6 @@ router.get(
       Playlist.find({ user: userId }).select('emotion tracks.name'),
     ]);
 
-    // Approximate genre distribution from playlists generated per emotion
     const genreDistribution = {};
     genrePlaylists.forEach((p) => {
       genreDistribution[p.emotion] = (genreDistribution[p.emotion] || 0) + p.tracks.length;

@@ -20,7 +20,6 @@ const emotionLogSchema = new mongoose.Schema(
       required: true,
     },
     confidence: {
-      // 0-100, only meaningful for camera-sourced detections
       type: Number,
       default: 100,
       min: 0,
