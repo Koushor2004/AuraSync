@@ -31,8 +31,8 @@ export default function Login() {
     <div className="auth-page">
       <div className="auth-card">
         <div className="auth-card__brand">
-          <AuraRing color="var(--brand)" size={56} confidence={80}>
-            <span style={{ fontSize: 20 }}>🎧</span>
+          <AuraRing color="var(--color-iris-glow)" size={64} confidence={85}>
+            <span style={{ fontSize: 22 }}>🎧</span>
           </AuraRing>
           <div>
             <h1>Welcome back</h1>
@@ -44,7 +44,7 @@ export default function Login() {
 
         <form onSubmit={onSubmit}>
           <div className="field">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">EMAIL</label>
             <input
               id="email"
               name="email"
@@ -57,7 +57,7 @@ export default function Login() {
             />
           </div>
           <div className="field">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">PASSWORD</label>
             <input
               id="password"
               name="password"
@@ -69,8 +69,8 @@ export default function Login() {
               placeholder="••••••••"
             />
           </div>
-          <button className="btn btn-primary btn-block" type="submit" disabled={loading}>
-            {loading ? 'Logging in…' : 'Log in'}
+          <button className="btn btn-primary btn-block" type="submit" disabled={loading} style={{ marginTop: 8 }}>
+            {loading ? 'Logging in…' : 'Log In'}
           </button>
         </form>
 

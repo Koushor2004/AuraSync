@@ -8,13 +8,13 @@ export default function PlaylistCard({ playlist, onSave, saving }) {
 
   return (
     <div className="card card--interactive">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ fontSize: 20 }}>{meta.emoji}</span>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <span style={{ fontSize: 24 }}>{meta.emoji}</span>
           <div>
-            <div style={{ fontWeight: 600, fontSize: 15 }}>{playlist.name}</div>
-            <div style={{ fontSize: 12.5, color: 'var(--text-muted)' }}>
-              {playlist.tracks?.length || 0} tracks · {meta.label} mood
+            <div style={{ fontWeight: 500, fontSize: 16, color: 'var(--color-carbon-vellum)' }}>{playlist.name}</div>
+            <div style={{ fontSize: 12, color: 'var(--color-smoke)', marginTop: 2 }}>
+              {playlist.tracks?.length || 0} tracks · <span style={{ color: 'var(--color-iris-glow)' }}>{meta.label}</span>
             </div>
           </div>
         </div>
@@ -29,7 +29,7 @@ export default function PlaylistCard({ playlist, onSave, saving }) {
         )}
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
         {(playlist.tracks || []).map((t, i) => {
           const isCurrent = currentTrack?.spotifyId === t.spotifyId;
           const showPlaying = isCurrent && isPlaying;
@@ -41,19 +41,19 @@ export default function PlaylistCard({ playlist, onSave, saving }) {
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: 10,
-                padding: '7px 8px',
-                borderRadius: 8,
-                transition: 'background 160ms ease',
+                gap: 12,
+                padding: '8px 10px',
+                borderRadius: 'var(--radius-cards)',
+                transition: 'background 160ms ease, border-color 160ms ease',
                 width: '100%',
-                border: 'none',
-                background: isCurrent ? 'var(--surface-alt)' : 'transparent',
+                border: isCurrent ? '1px solid var(--color-twilight)' : '1px solid transparent',
+                background: isCurrent ? 'var(--color-void)' : 'transparent',
                 textAlign: 'left',
                 cursor: t.previewUrl ? 'pointer' : 'not-allowed',
-                opacity: t.previewUrl ? 1 : 0.65,
+                opacity: t.previewUrl ? 1 : 0.6,
               }}
               onMouseEnter={(e) => {
-                if (!isCurrent && t.previewUrl) e.currentTarget.style.background = 'var(--surface-alt)';
+                if (!isCurrent && t.previewUrl) e.currentTarget.style.background = 'var(--color-void)';
               }}
               onMouseLeave={(e) => {
                 if (!isCurrent && t.previewUrl) e.currentTarget.style.background = 'transparent';
@@ -61,32 +61,32 @@ export default function PlaylistCard({ playlist, onSave, saving }) {
               title={!t.previewUrl ? "Preview unavailable" : showPlaying ? "Pause preview" : "Play preview"}
             >
               <span style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: 12.5,
-                color: isCurrent ? 'var(--brand-light)' : 'var(--text-faint)',
+                fontFamily: 'var(--font-neuemachinainktrap)',
+                fontSize: 11,
+                color: isCurrent ? 'var(--color-iris-glow)' : 'var(--color-smoke)',
                 minWidth: 20,
                 textAlign: 'right',
-                marginRight: 4
+                marginRight: 2
               }}>
-                {i + 1}
+                {String(i + 1).padStart(2, '0')}
               </span>
 
-              <div style={{ position: 'relative', width: 34, height: 34, flexShrink: 0 }}>
+              <div style={{ position: 'relative', width: 36, height: 36, flexShrink: 0 }}>
                 {t.albumArt ? (
-                  <img src={t.albumArt} alt="" width={34} height={34} style={{ borderRadius: 6, objectFit: 'cover' }} />
+                  <img src={t.albumArt} alt="" width={36} height={36} style={{ borderRadius: 6, objectFit: 'cover' }} />
                 ) : (
-                  <div style={{ width: 34, height: 34, borderRadius: 6, background: 'var(--surface-alt)' }} />
+                  <div style={{ width: 36, height: 36, borderRadius: 6, background: 'var(--color-void)' }} />
                 )}
                 {isCurrent && (
                   <div style={{
                     position: 'absolute',
                     inset: 0,
-                    background: 'rgba(15, 17, 23, 0.6)',
+                    background: 'rgba(4, 4, 7, 0.75)',
                     borderRadius: 6,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    color: 'var(--brand-light)'
+                    color: 'var(--color-iris-glow)'
                   }}>
                     {showPlaying ? <IconPauseMini /> : <IconPlayMini />}
                   </div>
@@ -94,22 +94,22 @@ export default function PlaylistCard({ playlist, onSave, saving }) {
               </div>
               <div style={{ minWidth: 0, flex: 1 }}>
                 <div style={{ 
-                  fontSize: 13.5, 
-                  fontWeight: 500, 
+                  fontSize: 14, 
+                  fontWeight: 400, 
                   overflow: 'hidden', 
                   textOverflow: 'ellipsis', 
                   whiteSpace: 'nowrap',
-                  color: isCurrent ? 'var(--brand-light)' : 'var(--text)'
+                  color: isCurrent ? 'var(--color-iris-glow)' : 'var(--color-carbon-vellum)'
                 }}>
                   {t.name}
                 </div>
-                <div style={{ fontSize: 12, color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                <div style={{ fontSize: 12, color: 'var(--color-smoke)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {t.artists}
                 </div>
               </div>
               
               {t.previewUrl && !isCurrent && (
-                <span className="play-icon-hover" style={{ color: 'var(--text-faint)', fontSize: 11, paddingRight: 4 }}>
+                <span className="play-icon-hover" style={{ color: 'var(--color-iris-glow)', fontSize: 11, paddingRight: 4 }}>
                   ▶
                 </span>
               )}

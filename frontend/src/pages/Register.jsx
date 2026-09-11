@@ -35,8 +35,8 @@ export default function Register() {
     <div className="auth-page">
       <div className="auth-card">
         <div className="auth-card__brand">
-          <AuraRing color="var(--e-excited)" size={56} confidence={65}>
-            <span style={{ fontSize: 20 }}>✨</span>
+          <AuraRing color="var(--color-iris-glow)" size={64} confidence={75}>
+            <span style={{ fontSize: 22 }}>✨</span>
           </AuraRing>
           <div>
             <h1>Create your aura</h1>
@@ -48,11 +48,11 @@ export default function Register() {
 
         <form onSubmit={onSubmit}>
           <div className="field">
-            <label htmlFor="name">Name</label>
+            <label htmlFor="name">NAME</label>
             <input id="name" name="name" required value={form.name} onChange={onChange} placeholder="Your name" />
           </div>
           <div className="field">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">EMAIL</label>
             <input
               id="email"
               name="email"
@@ -65,7 +65,7 @@ export default function Register() {
             />
           </div>
           <div className="field">
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password">PASSWORD</label>
             <input
               id="password"
               name="password"
@@ -77,8 +77,8 @@ export default function Register() {
               placeholder="At least 8 characters"
             />
           </div>
-          <button className="btn btn-primary btn-block" type="submit" disabled={loading}>
-            {loading ? 'Creating account…' : 'Create account'}
+          <button className="btn btn-primary btn-block" type="submit" disabled={loading} style={{ marginTop: 8 }}>
+            {loading ? 'Creating account…' : 'Create Account'}
           </button>
         </form>
 

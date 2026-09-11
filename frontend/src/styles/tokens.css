@@ -1,9 +1,23 @@
 :root {
+  /* Colors from design.md */
+  --color-carbon-vellum: #fcfcfc;
+  --color-obsidian: #0a0a13;
+  --color-pitch: #000000;
+  --color-void: #040407;
+  --color-graphite: #08080c;
+  --color-smoke: #757580;
+  --color-ash: #a3a3b3;
+  --color-charcoal: #2a2a32;
+  --color-iris-glow: #6199f6;
+  --color-twilight: #4f4f80;
+  --color-specter-lilac: #dedfee;
 
-  --brand: #6C63FF;
-  --brand-light: #9D97FF;
-  --brand-dark: #4B44CC;
+  /* Legacy Mapping for compatibility */
+  --brand: var(--color-iris-glow);
+  --brand-light: var(--color-specter-lilac);
+  --brand-dark: var(--color-twilight);
 
+  /* Emotion accent palette */
   --e-happy: #F5C242;
   --e-sad: #4A90D9;
   --e-angry: #E5484D;
@@ -14,47 +28,112 @@
   --e-excited: #EC4899;
   --e-relaxed: #2DD4BF;
 
-  --font-display: 'Space Grotesk', 'Inter', sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-mono: 'JetBrains Mono', 'SFMono-Regular', monospace;
+  /* Typography — Font Families */
+  --font-framegothic: 'FrameGothic', 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-neuemachinainktrap: 'NeueMachinaInktrap', 'Space Mono', monospace;
+  --font-display: var(--font-framegothic);
+  --font-body: var(--font-framegothic);
+  --font-mono: var(--font-neuemachinainktrap);
 
+  /* Typography — Scale */
+  --text-caption: 12px;
+  --leading-caption: 1.45;
+  --tracking-caption: 0.72px;
+  --text-body-sm: 14px;
+  --leading-body-sm: 1.5;
+  --text-body: 16px;
+  --leading-body: 1.45;
+  --tracking-body: 0.16px;
+  --text-subheading: 18px;
+  --leading-subheading: 1.3;
+  --text-heading-sm: 24px;
+  --leading-heading-sm: 1.25;
+  --tracking-heading-sm: -0.72px;
+  --text-heading: 38px;
+  --leading-heading: 1.04;
+  --tracking-heading: -1.33px;
+  --text-heading-lg: 48px;
+  --leading-heading-lg: 1.02;
+  --tracking-heading-lg: -1.92px;
+  --text-display: 80px;
+  --leading-display: 0.96;
+  --tracking-display: -3.6px;
 
-  --radius-sm: 8px;
-  --radius-md: 14px;
-  --radius-lg: 20px;
+  /* Typography — Weights */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+
+  /* Spacing */
+  --spacing-unit: 8px;
+  --spacing-8: 8px;
+  --spacing-16: 16px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-56: 56px;
+  --spacing-80: 80px;
+  --spacing-96: 96px;
+  --spacing-144: 144px;
+  --spacing-160: 160px;
+  --spacing-176: 176px;
+
+  /* Layout */
+  --page-max-width: 1280px;
+  --section-gap: 80px;
+  --card-padding: 24px;
+  --element-gap: 24px;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 10px;
+  --radius-lg: 10px;
+  --radius-3xl: 24px;
+  --radius-full: 100px;
+
+  --radius-nav: 100px;
+  --radius-cards: 10px;
+  --radius-pills: 100px;
+  --radius-buttons: 100px;
+  --radius-dividers: 1px;
+  --radius-featurecards: 24px;
+
+  /* Surfaces & Canvas */
+  --surface-cosmic-canvas: #0a0a13;
+  --surface-nav-veil: #040407;
+  --surface-product-surface: #08080c;
+  --surface-card-halo: #181826;
+
+  --bg: var(--surface-cosmic-canvas);
+  --bg-elevated: var(--surface-product-surface);
+  --surface: var(--surface-product-surface);
+  --surface-hover: #12121c;
+  --surface-alt: #0e0f18;
+  --border: var(--color-twilight);
+  --border-strong: var(--color-charcoal);
+  --text: var(--color-carbon-vellum);
+  --text-muted: var(--color-smoke);
+  --text-faint: var(--color-ash);
+
+  --halo-shadow: 0 0 60px rgba(79, 79, 128, 0.15);
+
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --dur: 220ms;
 }
 
-:root,
-[data-theme='dark'] {
-  --bg: #0F1117;
-  --bg-elevated: #14161F;
-  --surface: #171A23;
-  --surface-hover: #1E2230;
-  --surface-alt: #1A1D28;
-  --border: #262B3A;
-  --border-strong: #343B4F;
-  --text: #EDEEF2;
-  --text-muted: #8B90A0;
-  --text-faint: #5C6175;
-  --shadow-color: 0deg 0% 0%;
-  --overlay: rgba(10, 11, 16, 0.72);
-}
-
-[data-theme='light'] {
-  --bg: #F6F6FB;
-  --bg-elevated: #FFFFFF;
-  --surface: #FFFFFF;
-  --surface-hover: #F0F1F8;
-  --surface-alt: #EFF0F7;
-  --border: #E3E4EE;
-  --border-strong: #D2D4E4;
-  --text: #14151F;
-  --text-muted: #676B7A;
-  --text-faint: #9599A8;
-  --shadow-color: 226deg 30% 60%;
-  --overlay: rgba(20, 21, 31, 0.5);
+[data-theme='light'], [data-theme='dark'] {
+  /* Enforce cosmic dark projection room aesthetic in both modes */
+  --bg: var(--surface-cosmic-canvas);
+  --bg-elevated: var(--surface-product-surface);
+  --surface: var(--surface-product-surface);
+  --surface-hover: #12121c;
+  --surface-alt: #0e0f18;
+  --border: var(--color-twilight);
+  --border-strong: var(--color-charcoal);
+  --text: var(--color-carbon-vellum);
+  --text-muted: var(--color-smoke);
+  --text-faint: var(--color-ash);
 }
 
 * {
@@ -65,27 +144,25 @@ html,
 body {
   margin: 0;
   padding: 0;
-}
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--font-body);
+  background-color: var(--color-obsidian);
+  color: var(--color-carbon-vellum);
+  font-family: var(--font-framegothic);
   -webkit-font-smoothing: antialiased;
-  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+  -moz-osx-font-smoothing: grayscale;
 }
 
 #root {
   min-height: 100vh;
+  background: radial-gradient(circle at 50% 100%, #000b35 0%, transparent 60%),
+              linear-gradient(195deg, #0a0010 0%, #02000a 40%, #0c1d32 100%);
+  background-attachment: fixed;
 }
 
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--font-display);
+h1, h2, h3, h4 {
+  font-family: var(--font-framegothic);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-carbon-vellum);
   margin: 0;
-  letter-spacing: -0.02em;
 }
 
 p {
@@ -98,41 +175,39 @@ a {
 }
 
 button {
-  font-family: var(--font-body);
+  font-family: var(--font-framegothic);
 }
 
 ::selection {
-  background: var(--brand);
-  color: white;
+  background: var(--color-iris-glow);
+  color: var(--color-pitch);
 }
 
-
 :focus-visible {
-  outline: 2px solid var(--brand-light);
+  outline: 2px solid var(--color-iris-glow);
   outline-offset: 2px;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--color-void);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
-  border-radius: 8px;
+  background: var(--color-charcoal);
+  border-radius: 100px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-faint);
+  background: var(--color-twilight);
 }
 
 @media (prefers-reduced-motion: reduce) {
-
   *,
   *::before,
   *::after {

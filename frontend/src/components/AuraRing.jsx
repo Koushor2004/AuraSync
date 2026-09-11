@@ -1,7 +1,7 @@
 import React, { useId } from 'react';
 
 export default function AuraRing({
-  color = 'var(--brand)',
+  color = 'var(--color-iris-glow)',
   size = 120,
   confidence = 100,
   spinning = false,
@@ -30,10 +30,10 @@ export default function AuraRing({
         className="aura-ring__glow"
         style={{
           position: 'absolute',
-          inset: -size * 0.18,
+          inset: -size * 0.22,
           borderRadius: '50%',
-          background: `radial-gradient(circle, ${color}33 0%, transparent 68%)`,
-          filter: 'blur(2px)',
+          background: `radial-gradient(circle, ${color}44 0%, rgba(79, 79, 128, 0.15) 50%, transparent 70%)`,
+          filter: 'blur(8px)',
         }}
       />
       <svg
@@ -45,7 +45,7 @@ export default function AuraRing({
       >
         <defs>
           <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor={color} stopOpacity="0.35" />
+            <stop offset="0%" stopColor={color} stopOpacity="0.4" />
             <stop offset="100%" stopColor={color} stopOpacity="1" />
           </linearGradient>
         </defs>
@@ -54,7 +54,7 @@ export default function AuraRing({
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="var(--border)"
+          stroke="var(--color-twilight)"
           strokeWidth={stroke}
         />
         <circle
@@ -77,8 +77,9 @@ export default function AuraRing({
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          background: 'var(--surface)',
-          border: '1px solid var(--border)',
+          background: 'var(--color-graphite)',
+          border: '1px solid var(--color-twilight)',
+          boxShadow: 'inset 0 0 12px rgba(79, 79, 128, 0.2)',
         }}
       >
         {children}

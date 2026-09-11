@@ -25,7 +25,6 @@ export default function Settings() {
       const customMsg = params.get('message');
       setError(customMsg || 'Spotify connection failed. Please try again.');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const changeTheme = async (next) => {
@@ -62,48 +61,48 @@ export default function Settings() {
 
   return (
     <div className="page" style={{ maxWidth: 720 }}>
-      <PageHeader eyebrow="Settings" title="Account & preferences" />
+      <PageHeader eyebrow="PREFERENCES & INTEGRATIONS" title="Account & preferences" />
 
       {notice && <div className="form-success">{notice}</div>}
       {error && <div className="form-alert">{error}</div>}
 
-      <div className="card" style={{ marginBottom: 20 }}>
-        <div className="card-title">Appearance</div>
-        <p style={{ color: 'var(--text-muted)', fontSize: 13.5, marginBottom: 16 }}>
+      <div className="card" style={{ marginBottom: 24 }}>
+        <span className="card-title">APPEARANCE</span>
+        <p style={{ color: 'var(--color-smoke)', fontSize: 14, marginBottom: 16 }}>
           Choose how AuraSync looks on this device.
         </p>
-        <div style={{ display: 'flex', gap: 10 }}>
+        <div style={{ display: 'flex', gap: 12 }}>
           <button
             className={`btn ${theme === 'dark' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => changeTheme('dark')}
           >
-            🌙 Dark mode
+            🌙 Midnight Projection Suite
           </button>
           <button
             className={`btn ${theme === 'light' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => changeTheme('light')}
           >
-            ☀️ Light mode
+            ☀️ Standard Theme
           </button>
         </div>
       </div>
 
-      <div className="card" style={{ marginBottom: 20 }}>
-        <div className="card-title">Spotify connection</div>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div className="card" style={{ marginBottom: 24 }}>
+        <span className="card-title">SPOTIFY CONNECTION</span>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <span
               className="pill"
               style={{
-                color: user?.spotify?.connected ? 'var(--e-disgusted)' : 'var(--text-muted)',
-                borderColor: user?.spotify?.connected ? 'color-mix(in srgb, var(--e-disgusted) 40%, transparent)' : undefined,
+                color: user?.spotify?.connected ? 'var(--e-disgusted)' : 'var(--color-smoke)',
+                borderColor: user?.spotify?.connected ? 'var(--e-disgusted)' : undefined,
               }}
             >
-              <span className="pill-dot" />
-              {user?.spotify?.connected ? 'Connected' : 'Not connected'}
+              <span className="pill-dot" style={{ backgroundColor: user?.spotify?.connected ? 'var(--e-disgusted)' : 'var(--color-smoke)' }} />
+              {user?.spotify?.connected ? 'CONNECTED' : 'NOT CONNECTED'}
             </span>
             {user?.spotify?.connected && (
-              <span style={{ fontSize: 13.5, color: 'var(--text-muted)' }}>as {user.spotify.displayName}</span>
+              <span style={{ fontSize: 13, color: 'var(--color-smoke)' }}>as {user.spotify.displayName}</span>
             )}
           </div>
           {user?.spotify?.connected ? (
@@ -118,14 +117,14 @@ export default function Settings() {
         </div>
       </div>
 
-      <div className="card" style={{ borderColor: 'color-mix(in srgb, var(--e-angry) 30%, var(--border))' }}>
-        <div className="card-title" style={{ color: 'var(--e-angry)' }}>Danger zone</div>
-        <p style={{ color: 'var(--text-muted)', fontSize: 13.5, marginBottom: 16 }}>
+      <div className="card" style={{ borderColor: 'var(--e-angry)' }}>
+        <span className="card-title" style={{ color: 'var(--e-angry)' }}>DANGER ZONE</span>
+        <p style={{ color: 'var(--color-smoke)', fontSize: 14, marginBottom: 16 }}>
           Deleting your account permanently removes your profile, emotion history, and saved playlists. This cannot
           be undone.
         </p>
         <div className="field" style={{ maxWidth: 320 }}>
-          <label>Type DELETE to confirm</label>
+          <label>TYPE DELETE TO CONFIRM</label>
           <input value={confirmText} onChange={(e) => setConfirmText(e.target.value)} placeholder="DELETE" />
         </div>
         <button

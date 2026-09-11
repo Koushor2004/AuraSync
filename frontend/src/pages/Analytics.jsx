@@ -23,7 +23,6 @@ export default function Analytics() {
   const [summary, setSummary] = useState(null);
   const [history, setHistory] = useState(null);
   const [error, setError] = useState('');
-  const chartRefs = useRef({});
 
   useEffect(() => {
     (async () => {
@@ -43,7 +42,7 @@ export default function Analytics() {
   const exportPdf = () => {
     const doc = new jsPDF();
     doc.setFontSize(18);
-    doc.text('AuraSync — Emotion Report', 14, 20);
+    doc.text('AuraSync — Emotion & Audio Analytics Report', 14, 20);
     doc.setFontSize(10);
     doc.setTextColor(120);
     doc.text(`Generated ${new Date().toLocaleString()}`, 14, 27);
@@ -64,7 +63,7 @@ export default function Analytics() {
         h.source === 'camera' ? `${Math.round(h.confidence)}%` : '—',
       ]),
       styles: { fontSize: 8 },
-      headStyles: { fillColor: [108, 99, 255] },
+      headStyles: { fillColor: [97, 153, 246] },
     });
 
     doc.save('aurasync-emotion-report.pdf');
@@ -73,7 +72,7 @@ export default function Analytics() {
   if (error) {
     return (
       <div className="page">
-        <PageHeader eyebrow="Analytics" title="Your mood, mapped" />
+        <PageHeader eyebrow="TRENDS & ANALYTICS" title="Your mood, mapped" />
         <div className="form-alert">{error}</div>
       </div>
     );
@@ -103,27 +102,27 @@ export default function Analytics() {
   return (
     <div className="page">
       <PageHeader
-        eyebrow="Analytics"
+        eyebrow="TRENDS & ANALYTICS"
         title="Your mood, mapped"
-        subtitle="Frequency, trend, and the genres your aura leans toward."
+        subtitle="Frequency, trends, and audio features your aura leans toward."
         actions={
           <button className="btn btn-secondary" onClick={exportPdf} disabled={!history}>
-            Download PDF report
+            Download PDF Report
           </button>
         }
       />
 
       {!summary ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 24 }}>
           <div className="skeleton" style={{ height: 280 }} />
           <div className="skeleton" style={{ height: 280 }} />
           <div className="skeleton" style={{ height: 280 }} />
           <div className="skeleton" style={{ height: 280 }} />
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 20 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 24 }}>
           <div className="card">
-            <div className="card-title">Weekly emotion frequency</div>
+            <span className="card-title">WEEKLY EMOTION FREQUENCY</span>
             {weeklyData.length ? (
               <div style={{ maxWidth: 500, margin: '0 auto', height: 220 }}>
                 <Bar
@@ -141,14 +140,16 @@ export default function Analytics() {
           </div>
 
           <div className="card">
-            <div className="card-title">Most common emotion</div>
+            <span className="card-title">DOMINANT EMOTIONAL STATE</span>
             {summary.mostCommonEmotion ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 18, padding: '24px 8px' }}>
-                <div style={{ fontSize: 56 }}>{EMOTIONS[summary.mostCommonEmotion]?.emoji}</div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 20, padding: '32px 12px' }}>
+                <div style={{ fontSize: 60 }}>{EMOTIONS[summary.mostCommonEmotion]?.emoji}</div>
                 <div>
-                  <div style={{ fontSize: 24, fontWeight: 700 }}>{EMOTIONS[summary.mostCommonEmotion]?.label}</div>
-                  <div style={{ color: 'var(--text-muted)', fontSize: 13.5 }}>
-                    Your most frequently logged mood overall
+                  <div style={{ fontSize: 26, fontWeight: 400, color: 'var(--color-carbon-vellum)' }}>
+                    {EMOTIONS[summary.mostCommonEmotion]?.label}
+                  </div>
+                  <div style={{ color: 'var(--color-smoke)', fontSize: 14, marginTop: 4 }}>
+                    Your most frequently logged mood across sessions
                   </div>
                 </div>
               </div>
@@ -158,10 +159,9 @@ export default function Analytics() {
           </div>
 
           <div className="card">
-            <div className="card-title">Monthly mood trend</div>
+            <span className="card-title">MONTHLY MOOD TREND</span>
             <div style={{ maxWidth: 500, margin: '0 auto', height: 220 }}>
               {monthlyDatasets.length ? (
-
                 <Line data={{ labels: months, datasets: monthlyDatasets }} options={chartOptions()} height={220} />
               ) : (
                 <EmptyChart label="No history in the last 6 months" />
@@ -170,7 +170,7 @@ export default function Analytics() {
           </div>
 
           <div className="card">
-            <div className="card-title">Music genre distribution</div>
+            <span className="card-title">GENRE & AUDIO DISTRIBUTION</span>
             {genreData.length ? (
               <div style={{ maxWidth: 500, margin: '0 auto', height: 220 }}>
                 <Doughnut
@@ -191,25 +191,25 @@ export default function Analytics() {
 
 function EmptyChart({ label }) {
   return (
-    <div style={{ height: 220, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-faint)', fontSize: 13.5 }}>
+    <div style={{ height: 220, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--color-smoke)', fontSize: 14 }}>
       {label}
     </div>
   );
 }
 
 function resolveVar(v) {
-  if (!v) return '#94A3B8';
+  if (!v) return '#6199f6';
   if (!v.startsWith('var(')) return v;
   const name = v.replace('var(', '').replace(')', '');
-  return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || '#94A3B8';
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || '#6199f6';
 }
 
 function textColor() {
-  return getComputedStyle(document.documentElement).getPropertyValue('--text-muted').trim() || '#8B90A0';
+  return getComputedStyle(document.documentElement).getPropertyValue('--color-smoke').trim() || '#757580';
 }
 
 function chartOptions() {
-  const grid = getComputedStyle(document.documentElement).getPropertyValue('--border').trim();
+  const grid = getComputedStyle(document.documentElement).getPropertyValue('--color-charcoal').trim() || '#2a2a32';
   const muted = textColor();
   return {
     responsive: true,

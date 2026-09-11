@@ -8,31 +8,48 @@ export default function PageHeader({ eyebrow, title, subtitle, actions }) {
         justifyContent: 'space-between',
         alignItems: 'flex-end',
         flexWrap: 'wrap',
-        gap: 16,
-        marginBottom: 32,
+        gap: 20,
+        marginBottom: 40,
       }}
     >
-      <div>
+      <div style={{ maxWidth: 640 }}>
         {eyebrow && (
           <div
+            className="eyebrow-label"
             style={{
-              fontSize: 12.5,
-              fontWeight: 700,
-              letterSpacing: '0.08em',
-              textTransform: 'uppercase',
-              color: 'var(--brand-light)',
-              marginBottom: 6,
+              marginBottom: 8,
             }}
           >
             {eyebrow}
           </div>
         )}
-        <h1 style={{ fontSize: 28, fontWeight: 700 }}>{title}</h1>
+        <h1
+          style={{
+            fontFamily: 'var(--font-framegothic)',
+            fontSize: 'clamp(28px, 4vw, 48px)',
+            fontWeight: 400,
+            lineHeight: 1.02,
+            letterSpacing: '-1.92px',
+            color: 'var(--color-carbon-vellum)',
+          }}
+        >
+          {title}
+        </h1>
         {subtitle && (
-          <p style={{ color: 'var(--text-muted)', marginTop: 6, fontSize: 14.5 }}>{subtitle}</p>
+          <p
+            style={{
+              fontFamily: 'var(--font-framegothic)',
+              color: 'var(--color-smoke)',
+              marginTop: 10,
+              fontSize: 16,
+              lineHeight: 1.45,
+            }}
+          >
+            {subtitle}
+          </p>
         )}
       </div>
-      {actions && <div style={{ display: 'flex', gap: 10 }}>{actions}</div>}
+      {actions && <div style={{ display: 'flex', gap: 12 }}>{actions}</div>}
     </div>
   );
 }

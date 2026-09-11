@@ -35,3 +35,6 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+.md files
+*design.md

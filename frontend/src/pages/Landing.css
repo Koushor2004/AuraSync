@@ -1,129 +1,304 @@
 .landing {
   min-height: 100vh;
-  background:
-    radial-gradient(900px circle at 80% -10%, color-mix(in srgb, var(--brand) 16%, transparent), transparent 55%),
-    var(--bg);
+  background-color: var(--surface-cosmic-canvas);
+  color: var(--color-carbon-vellum);
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Nav Veil */
+.landing__nav-veil {
+  background-color: var(--surface-nav-veil);
+  border-bottom: 1px solid var(--color-charcoal);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .landing__nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 22px 48px;
-  max-width: 1280px;
+  padding: 16px 48px;
+  max-width: var(--page-max-width);
   margin: 0 auto;
 }
 
 .landing__brand {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-family: var(--font-display);
-  font-weight: 700;
+  gap: 12px;
+  font-family: var(--font-framegothic);
+  font-weight: 500;
   font-size: 18px;
+  color: var(--color-carbon-vellum);
+  letter-spacing: -0.02em;
 }
 
 .landing__nav-actions {
   display: flex;
-  gap: 10px;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Cosmic Hero Section */
+.landing__hero-wrapper {
+  background: radial-gradient(circle at 50% 100%, #000b35 0%, transparent 60%),
+              linear-gradient(195deg, #0a0010 0%, #02000a 40%, #0c1d32 100%);
+  padding: 80px 48px 120px;
 }
 
 .landing__hero {
-  max-width: 1280px;
+  max-width: var(--page-max-width);
   margin: 0 auto;
-  padding: 48px 48px 80px;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
-  gap: 40px;
+  gap: 56px;
   align-items: center;
 }
 
-.landing__hero-copy h1 {
-  font-size: clamp(38px, 5vw, 58px);
-  line-height: 1.05;
-  margin-bottom: 22px;
+.landing__hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.landing__gradient-text {
-  background: linear-gradient(120deg, var(--brand-light), var(--e-relaxed));
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.landing__hero-copy h1 {
+  font-family: var(--font-framegothic);
+  font-size: clamp(48px, 6vw, 80px);
+  font-weight: 400;
+  line-height: 0.96;
+  letter-spacing: -3.6px;
+  color: var(--color-carbon-vellum);
+  margin-bottom: 24px;
 }
 
 .landing__hero-copy p {
-  color: var(--text-muted);
-  font-size: 16.5px;
-  line-height: 1.65;
-  max-width: 480px;
-  margin-bottom: 28px;
+  font-family: var(--font-framegothic);
+  font-size: 18px;
+  line-height: 1.35;
+  color: var(--color-smoke);
+  max-width: 560px;
+  margin-bottom: 36px;
 }
 
 .landing__hero-actions {
   display: flex;
-  gap: 12px;
-  margin-bottom: 16px;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
 }
 
 .landing__hero-note {
   font-size: 13px !important;
-  color: var(--text-faint) !important;
+  color: var(--color-ash) !important;
 }
 
-.landing__hero-visual {
+/* Product UI Mockup Container (Right Hero) */
+.landing__mockup-frame {
+  background-color: var(--surface-product-surface);
+  border-radius: var(--radius-cards);
+  border: 1px solid var(--color-twilight);
+  box-shadow: inset 0 0 0 1px var(--color-twilight), 0 0 60px rgba(79, 79, 128, 0.18);
+  padding: 32px;
+  position: relative;
+}
+
+.landing__mockup-header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--color-charcoal);
+}
+
+.landing__mockup-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.landing__mockup-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--color-twilight);
+}
+
+.landing__mockup-title {
+  font-family: var(--font-neuemachinainktrap);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--color-iris-glow);
+  text-transform: uppercase;
+}
+
+/* Emotion Strip */
+.landing__strip-wrapper {
+  background-color: var(--surface-nav-veil);
+  border-top: 1px solid var(--color-charcoal);
+  border-bottom: 1px solid var(--color-charcoal);
+  padding: 32px 48px;
 }
 
 .landing__strip {
-  max-width: 1280px;
+  max-width: var(--page-max-width);
   margin: 0 auto;
-  padding: 0 48px 64px;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 16px;
 }
 
 .landing__strip-item {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 9px 16px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--c);
+  gap: 10px;
+  padding: 10px 20px;
+  border-radius: var(--radius-pills);
+  border: 1px solid var(--color-twilight);
+  background-color: var(--surface-product-surface);
+  font-family: var(--font-framegothic);
+  font-size: 14px;
+  color: var(--color-carbon-vellum);
+  transition: all var(--dur) var(--ease);
 }
 
-.landing__features {
-  max-width: 1280px;
+.landing__strip-item:hover {
+  border-color: var(--color-iris-glow);
+  box-shadow: 0 0 20px rgba(97, 153, 246, 0.2);
+}
+
+/* Feature Columns (Editorial blocks - no card backgrounds per design.md) */
+.landing__features-wrapper {
+  padding: 120px 48px;
+  max-width: var(--page-max-width);
   margin: 0 auto;
-  padding: 0 48px 96px;
+}
+
+.landing__features-header {
+  margin-bottom: 64px;
+}
+
+.landing__features-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+}
+
+.landing__feature-block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.landing__feature-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--color-iris-glow);
+}
+
+.landing__feature-title {
+  font-family: var(--font-framegothic);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--color-carbon-vellum);
+}
+
+.landing__feature-body {
+  font-family: var(--font-framegothic);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-smoke);
+}
+
+/* Video Showcase Section */
+.landing__showcase-wrapper {
+  background: radial-gradient(top left, #0e0f20 0%, #0c0c19 50%, #000000 100%);
+  padding: 120px 48px;
+  border-top: 1px solid var(--color-charcoal);
+}
+
+.landing__showcase {
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.landing__video-player {
+  position: relative;
+  border-radius: var(--radius-cards);
+  border: 1px solid var(--color-twilight);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6), inset 0 0 0 1px var(--color-twilight);
+  overflow: hidden;
+  background-color: var(--surface-product-surface);
+  aspect-ratio: 16 / 9;
+  max-width: 960px;
+  margin: 48px auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.landing__play-overlay {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background-color: rgba(97, 153, 246, 0.85);
+  color: var(--color-obsidian);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform var(--dur) var(--ease), background-color var(--dur) var(--ease);
+  box-shadow: 0 0 32px rgba(97, 153, 246, 0.4);
+}
+
+.landing__play-overlay:hover {
+  transform: scale(1.1);
+  background-color: var(--color-carbon-vellum);
+}
+
+.landing__video-caption {
+  font-family: var(--font-neuemachinainktrap);
+  font-size: 12px;
+  color: var(--color-smoke);
+  letter-spacing: 0.04em;
+}
+
+/* Footer */
+.landing__footer-veil {
+  border-top: 1px solid var(--color-charcoal);
+  background-color: var(--surface-nav-veil);
+  padding: 40px 48px;
 }
 
 .landing__footer {
-  border-top: 1px solid var(--border);
-  padding: 24px 48px;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  color: var(--text-faint);
+  align-items: center;
+  color: var(--color-smoke);
   font-size: 13px;
-  max-width: 1280px;
-  margin: 0 auto;
+  font-family: var(--font-framegothic);
+}
+
+@media (max-width: 1024px) {
+  .landing__features-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 900px) {
   .landing__hero {
     grid-template-columns: 1fr;
   }
-  .landing__hero-visual { order: -1; }
-  .landing__features { grid-template-columns: 1fr; }
-  .landing__nav, .landing__hero, .landing__strip, .landing__features, .landing__footer {
+  .landing__features-grid {
+    grid-template-columns: 1fr;
+  }
+  .landing__nav, .landing__hero-wrapper, .landing__strip-wrapper, .landing__features-wrapper, .landing__showcase-wrapper, .landing__footer-veil {
     padding-left: 24px;
     padding-right: 24px;
   }

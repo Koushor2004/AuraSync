@@ -1,40 +1,46 @@
 .detect-tabs {
   display: inline-flex;
-  gap: 4px;
-  background: var(--surface-alt);
-  border: 1px solid var(--border);
-  padding: 4px;
-  border-radius: 12px;
-  margin-bottom: 24px;
+  gap: 6px;
+  background-color: var(--surface-nav-veil);
+  border: 1px solid var(--color-charcoal);
+  padding: 6px;
+  border-radius: var(--radius-pills);
+  margin-bottom: 32px;
 }
 
 .detect-tab {
-  padding: 8px 18px;
-  border-radius: 9px;
-  font-size: 13.5px;
-  font-weight: 600;
-  color: var(--text-muted);
+  padding: 10px 24px;
+  border-radius: var(--radius-pills);
+  font-family: var(--font-framegothic);
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-smoke);
   cursor: pointer;
   border: none;
   background: transparent;
   transition: all var(--dur) var(--ease);
 }
 
+.detect-tab:hover {
+  color: var(--color-carbon-vellum);
+}
+
 .detect-tab--active {
-  background: var(--surface);
-  color: var(--text);
-  box-shadow: 0 4px 10px -4px hsl(var(--shadow-color) / 0.4);
+  background-color: var(--color-carbon-vellum);
+  color: var(--color-obsidian);
+  font-weight: 500;
 }
 
 .camera-frame {
   position: relative;
   width: 100%;
-  max-width: 480px;
+  max-width: 520px;
   aspect-ratio: 4 / 3;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-cards);
   overflow: hidden;
-  background: #000;
-  border: 1px solid var(--border);
+  background-color: var(--surface-product-surface);
+  border: 1px solid var(--color-twilight);
+  box-shadow: inset 0 0 0 1px var(--color-twilight), 0 0 60px rgba(79, 79, 128, 0.15);
 }
 
 .camera-frame video {
@@ -51,58 +57,61 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 12px;
-  background: var(--overlay);
-  color: var(--text);
+  gap: 14px;
+  background-color: rgba(4, 4, 7, 0.85);
+  color: var(--color-carbon-vellum);
   text-align: center;
-  padding: 24px;
+  padding: 32px;
 }
 
 .camera-frame__badge {
   position: absolute;
-  bottom: 14px;
-  left: 14px;
-  right: 14px;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(15, 17, 23, 0.72);
-  backdrop-filter: blur(6px);
-  border-radius: 12px;
-  padding: 10px 14px;
-  color: #fff;
+  background: rgba(8, 8, 12, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: var(--radius-cards);
+  border: 1px solid var(--color-twilight);
+  padding: 12px 18px;
+  color: var(--color-carbon-vellum);
 }
 
 .mood-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 12px;
+  gap: 16px;
 }
 
 .mood-btn {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 20px 12px;
-  border-radius: var(--radius-md);
-  border: 1.5px solid var(--border);
-  background: var(--surface);
+  gap: 10px;
+  padding: 24px 16px;
+  border-radius: var(--radius-cards);
+  border: 1px solid var(--color-twilight);
+  background-color: var(--surface-product-surface);
   cursor: pointer;
   transition: all var(--dur) var(--ease);
-  font-family: var(--font-body);
+  font-family: var(--font-framegothic);
 }
 
 .mood-btn:hover {
   transform: translateY(-2px);
-  border-color: var(--c);
+  border-color: var(--color-iris-glow);
+  box-shadow: 0 0 20px rgba(97, 153, 246, 0.15);
 }
 
 .mood-btn--active {
-  border-color: var(--c);
-  background: color-mix(in srgb, var(--c) 10%, var(--surface));
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 20%, transparent);
+  border-color: var(--color-iris-glow);
+  background-color: rgba(97, 153, 246, 0.1);
+  box-shadow: inset 0 0 0 1px var(--color-iris-glow), 0 0 24px rgba(97, 153, 246, 0.25);
 }
 
-.mood-btn__emoji { font-size: 30px; }
-.mood-btn__label { font-size: 13.5px; font-weight: 600; color: var(--text); }
+.mood-btn__emoji { font-size: 32px; }
+.mood-btn__label { font-size: 14px; font-weight: 500; color: var(--color-carbon-vellum); }

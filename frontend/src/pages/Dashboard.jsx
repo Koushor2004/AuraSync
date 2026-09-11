@@ -34,41 +34,41 @@ export default function Dashboard() {
   return (
     <div className="page">
       <PageHeader
-        eyebrow="Dashboard"
+        eyebrow="OVERVIEW"
         title={`${greeting}, ${user?.name?.split(' ')[0] || 'there'}`}
-        subtitle="Here's what your aura has looked like lately."
+        subtitle="Here's what your aura has looked like in recent sessions."
         actions={
           <Link to="/detect" className="btn btn-primary">
-            Detect mood
+            Detect Mood
           </Link>
         }
       />
 
       {error && <div className="form-alert">{error}</div>}
 
-      <div style={{ display: 'grid', gridTemplateColumns: '340px 1fr', gap: 20, marginBottom: 20 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '340px 1fr', gap: 32, marginBottom: 40 }}>
         {/* Current aura card */}
-        <div className="card" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 16 }}>
-          <div className="card-title" style={{ alignSelf: 'flex-start' }}>Current aura</div>
-          <AuraRing color={meta.color} size={132} confidence={92}>
+        <div className="card product-mockup-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', gap: 20, padding: 32 }}>
+          <span className="eyebrow-label" style={{ alignSelf: 'flex-start' }}>CURRENT AURA</span>
+          <AuraRing color="var(--color-iris-glow)" size={144} confidence={92}>
             <div>
-              <div style={{ fontSize: 40 }}>{meta.emoji}</div>
+              <div style={{ fontSize: 44 }}>{meta.emoji}</div>
             </div>
           </AuraRing>
           <div>
-            <h3 style={{ fontSize: 20 }}>{meta.label}</h3>
-            <p style={{ color: 'var(--text-muted)', fontSize: 13.5, marginTop: 4 }}>
+            <h3 style={{ fontSize: 22, fontWeight: 400, color: 'var(--color-carbon-vellum)' }}>{meta.label}</h3>
+            <p style={{ color: 'var(--color-smoke)', fontSize: 13, marginTop: 4 }}>
               Last updated {user?.lastActiveAt ? timeAgo(user.lastActiveAt) : 'just now'}
             </p>
           </div>
           <Link to="/detect" className="btn btn-secondary btn-sm btn-block">
-            Re-scan my mood
+            Re-scan My Mood
           </Link>
         </div>
 
         {/* Stats + history */}
         <div className="card">
-          <div className="card-title">Recent emotion history</div>
+          <span className="card-title">RECENT EMOTION HISTORY</span>
           {!history ? (
             <SkeletonRows />
           ) : history.length === 0 ? (
@@ -87,27 +87,27 @@ export default function Dashboard() {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      padding: '10px 8px',
-                      borderRadius: 8,
-                      borderBottom: '1px solid var(--border)',
+                      padding: '12px 10px',
+                      borderRadius: 'var(--radius-cards)',
+                      borderBottom: '1px solid var(--color-charcoal)',
                     }}
                   >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                      <span style={{ fontSize: 18 }}>{m.emoji}</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                      <span style={{ fontSize: 20 }}>{m.emoji}</span>
                       <div>
-                        <div style={{ fontWeight: 500, fontSize: 14 }}>{m.label}</div>
-                        <div style={{ fontSize: 12, color: 'var(--text-faint)' }}>
+                        <div style={{ fontWeight: 400, fontSize: 14, color: 'var(--color-carbon-vellum)' }}>{m.label}</div>
+                        <div style={{ fontSize: 12, color: 'var(--color-smoke)' }}>
                           {log.source === 'camera' ? 'Camera detected' : 'Manually selected'}
                         </div>
                       </div>
                     </div>
                     <div style={{ textAlign: 'right' }}>
                       {log.source === 'camera' && (
-                        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12.5, color: m.color }}>
-                          {Math.round(log.confidence)}%
+                        <div style={{ fontFamily: 'var(--font-neuemachinainktrap)', fontSize: 11, color: 'var(--color-iris-glow)' }}>
+                          {Math.round(log.confidence)}% CONFIDENCE
                         </div>
                       )}
-                      <div style={{ fontSize: 11.5, color: 'var(--text-faint)' }}>{timeAgo(log.createdAt)}</div>
+                      <div style={{ fontSize: 12, color: 'var(--color-smoke)' }}>{timeAgo(log.createdAt)}</div>
                     </div>
                   </div>
                 );
@@ -117,12 +117,12 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="card-title" style={{ marginTop: 8 }}>Recently recommended playlists</div>
+      <span className="eyebrow-label" style={{ marginBottom: 16 }}>RECENTLY RECOMMENDED MIXES</span>
       {!playlists ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
-          <div className="skeleton" style={{ height: 180 }} />
-          <div className="skeleton" style={{ height: 180 }} />
-          <div className="skeleton" style={{ height: 180 }} />
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20 }}>
+          <div className="skeleton" style={{ height: 200 }} />
+          <div className="skeleton" style={{ height: 200 }} />
+          <div className="skeleton" style={{ height: 200 }} />
         </div>
       ) : playlists.length === 0 ? (
         <div className="card empty-state">
@@ -130,7 +130,7 @@ export default function Dashboard() {
           <p>Detect your mood to generate your first AI-curated playlist.</p>
         </div>
       ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 16 }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 24 }}>
           {playlists.map((p) => (
             <PlaylistCard key={p._id} playlist={p} />
           ))}
@@ -142,9 +142,9 @@ export default function Dashboard() {
 
 function SkeletonRows() {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       {[1, 2, 3, 4].map((i) => (
-        <div key={i} className="skeleton" style={{ height: 46 }} />
+        <div key={i} className="skeleton" style={{ height: 50 }} />
       ))}
     </div>
   );

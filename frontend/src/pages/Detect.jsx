@@ -91,13 +91,11 @@ export default function Detect() {
     canvas.height = video.videoHeight || 360;
 
     const ctx = canvas.getContext('2d');
-
     ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
     stopCamera();
 
     try {
-
       const detection = await faceapi
         .detectSingleFace(canvas, new faceapi.TinyFaceDetectorOptions())
         .withFaceExpressions();
@@ -182,9 +180,9 @@ export default function Detect() {
   return (
     <div className="page">
       <PageHeader
-        eyebrow="Detect mood"
+        eyebrow="EXPRESSION CAPTURE"
         title="What's your aura right now?"
-        subtitle="Use your camera for an instant read, or pick your mood manually."
+        subtitle="Use your camera for an instant local read, or pick your mood manually."
       />
 
       <div className="detect-tabs">
@@ -204,7 +202,7 @@ export default function Detect() {
 
       {error && <div className="form-alert">{error}</div>}
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24, alignItems: 'start' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, alignItems: 'start' }}>
         <div>
           {tab === 'camera' ? (
             <div className="camera-frame">
@@ -232,24 +230,24 @@ export default function Detect() {
                     <p style={{ color: 'var(--e-angry)' }}>{modelError}</p>
                   ) : !modelsLoaded ? (
                     <>
-                      <AuraRing color="var(--brand)" size={54} confidence={60} spinning />
-                      <p style={{ fontSize: 13.5, color: 'var(--text-muted)' }}>Loading detection models…</p>
+                      <AuraRing color="var(--color-iris-glow)" size={54} confidence={60} spinning />
+                      <p style={{ fontSize: 13, color: 'var(--color-smoke)' }}>Loading detection models…</p>
                     </>
                   ) : permission === 'denied' ? (
                     <>
-                      <p style={{ fontWeight: 600 }}>Camera access denied</p>
-                      <p style={{ fontSize: 13, color: 'var(--text-muted)' }}>
+                      <p style={{ fontWeight: 500 }}>Camera access denied</p>
+                      <p style={{ fontSize: 13, color: 'var(--color-smoke)' }}>
                         Enable camera permission in your browser settings, or switch to manual selection.
                       </p>
                       <button className="btn btn-secondary btn-sm" onClick={startCamera}>Try again</button>
                     </>
                   ) : (
                     <>
-                      <p style={{ fontWeight: 600 }}>Camera is off</p>
-                      <p style={{ fontSize: 13, color: 'var(--text-muted)', maxWidth: 260 }}>
+                      <p style={{ fontWeight: 500 }}>Camera is off</p>
+                      <p style={{ fontSize: 13, color: 'var(--color-smoke)', maxWidth: 280 }}>
                         We process a single frame locally in-browser — nothing is ever uploaded.
                       </p>
-                      <button className="btn btn-primary btn-sm" onClick={startCamera}>Enable camera</button>
+                      <button className="btn btn-primary btn-sm" onClick={startCamera}>Enable Camera</button>
                     </>
                   )}
                 </div>
@@ -257,7 +255,7 @@ export default function Detect() {
 
               {permission === 'granted' && !captured && (
                 <div className="camera-frame__badge" style={{ justifyContent: 'center' }}>
-                  <button className="btn btn-primary btn-sm" onClick={captureAndDetect} style={{ borderRadius: 999 }}>
+                  <button className="btn btn-primary btn-sm" onClick={captureAndDetect}>
                     📸 Capture Image
                   </button>
                 </div>
@@ -265,19 +263,19 @@ export default function Detect() {
 
               {permission === 'granted' && captured && analyzing && (
                 <div className="camera-frame__overlay">
-                  <AuraRing color="var(--brand)" size={54} confidence={60} spinning />
-                  <p style={{ fontSize: 13.5, color: 'var(--text-muted)' }}>Analyzing photo…</p>
+                  <AuraRing color="var(--color-iris-glow)" size={54} confidence={60} spinning />
+                  <p style={{ fontSize: 13, color: 'var(--color-smoke)' }}>Analyzing photo…</p>
                 </div>
               )}
 
               {permission === 'granted' && captured && !analyzing && liveResult && (
                 <div className="camera-frame__badge">
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <span style={{ fontSize: 22 }}>{meta?.emoji}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                    <span style={{ fontSize: 24 }}>{meta?.emoji}</span>
                     <div>
-                      <div style={{ fontWeight: 600, fontSize: 14 }}>{meta?.label}</div>
-                      <div style={{ fontSize: 11.5, color: '#B8BCC8', fontFamily: 'var(--font-mono)' }}>
-                        {liveResult.confidence}% confidence
+                      <div style={{ fontWeight: 500, fontSize: 14, color: 'var(--color-carbon-vellum)' }}>{meta?.label}</div>
+                      <div style={{ fontSize: 11, color: 'var(--color-iris-glow)', fontFamily: 'var(--font-neuemachinainktrap)' }}>
+                        {liveResult.confidence}% CONFIDENCE
                       </div>
                     </div>
                   </div>
@@ -289,8 +287,8 @@ export default function Detect() {
 
               {permission === 'granted' && captured && !analyzing && !liveResult && error && (
                 <div className="camera-frame__overlay">
-                  <p style={{ color: 'var(--e-angry)', fontWeight: 600 }}>Detection Failed</p>
-                  <p style={{ fontSize: 13, color: 'var(--text-muted)', textAlign: 'center', maxWidth: 280 }}>
+                  <p style={{ color: 'var(--e-angry)', fontWeight: 500 }}>Detection Failed</p>
+                  <p style={{ fontSize: 13, color: 'var(--color-smoke)', textAlign: 'center', maxWidth: 280 }}>
                     We couldn't detect a face in the captured frame.
                   </p>
                   <button className="btn btn-primary btn-sm" onClick={resetCamera} style={{ marginTop: 8 }}>
@@ -307,7 +305,6 @@ export default function Detect() {
                   <button
                     key={key}
                     className={`mood-btn${selectedManual === key ? ' mood-btn--active' : ''}`}
-                    style={{ '--c': m.color }}
                     onClick={() => {
                       setSelectedManual(key);
                       submitMood(key, 'manual');
@@ -322,28 +319,28 @@ export default function Detect() {
           )}
 
           {permission === 'granted' && tab === 'camera' && !captured && (
-            <button className="btn btn-ghost btn-sm" style={{ marginTop: 14 }} onClick={stopCamera}>
+            <button className="btn btn-ghost btn-sm" style={{ marginTop: 16 }} onClick={stopCamera}>
               Turn off camera
             </button>
           )}
         </div>
 
         <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
-            <div className="card-title" style={{ marginBottom: 0 }}>Your recommended mix</div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+            <span className="card-title" style={{ marginBottom: 0 }}>RECOMMENDED MIX</span>
             {resultPlaylist && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <span style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 500 }}>Language:</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <span style={{ fontSize: 12, color: 'var(--color-smoke)', fontFamily: 'var(--font-neuemachinainktrap)' }}>LANG:</span>
                 <select
                   value={selectedLanguage}
                   onChange={(e) => handleLanguageChange(e.target.value)}
                   style={{
-                    background: 'var(--surface-alt)',
-                    border: '1px solid var(--border)',
-                    borderRadius: 6,
-                    padding: '4px 8px',
+                    backgroundColor: 'var(--surface-nav-veil)',
+                    border: '1px solid var(--color-twilight)',
+                    borderRadius: 'var(--radius-cards)',
+                    padding: '4px 10px',
                     fontSize: 12,
-                    color: 'var(--text)',
+                    color: 'var(--color-carbon-vellum)',
                     cursor: 'pointer',
                     outline: 'none'
                   }}
@@ -360,7 +357,7 @@ export default function Detect() {
             )}
           </div>
           {saving ? (
-            <div className="skeleton" style={{ height: 220 }} />
+            <div className="skeleton" style={{ height: 260 }} />
           ) : resultPlaylist ? (
             <PlaylistCard playlist={resultPlaylist} />
           ) : (
