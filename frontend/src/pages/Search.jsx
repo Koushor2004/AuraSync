@@ -4,6 +4,7 @@ import api from '../utils/api.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import { usePlayer } from '../context/PlayerContext.jsx';
 import PageHeader from '../components/PageHeader.jsx';
+import keySvg from '../assets/key.svg';
 
 export default function Search() {
   const { user } = useAuth();
@@ -50,7 +51,9 @@ export default function Search() {
 
       {!isSpotifyConnected ? (
         <div className="card empty-state" style={{ padding: '60px 24px' }}>
-          <div style={{ fontSize: 44, marginBottom: 14 }}>🔑</div>
+          <div style={{ marginBottom: 14 }}>
+            <img src={keySvg} alt="" width={44} height={44} className="svg-icon" style={{ display: 'inline-block' }} />
+          </div>
           <h3>Spotify connection required</h3>
           <p style={{ marginBottom: 20 }}>
             You need to link your Spotify account in order to search the full Spotify catalog.
@@ -110,91 +113,122 @@ export default function Search() {
               {tracks.map((t, i) => {
                 const isCurrent = currentTrack?.spotifyId === t.spotifyId;
                 const showPlaying = isCurrent && isPlaying;
+                const spotifyUrl = t.externalUrl || (t.spotifyId ? `https://open.spotify.com/track/${t.spotifyId}` : null);
 
                 return (
-                  <button
+                  <div
                     key={t.spotifyId || i}
-                    onClick={() => t.previewUrl && playTrack(t)}
                     style={{
                       display: 'flex',
                       alignItems: 'center',
-                      gap: 12,
-                      padding: '10px 12px',
+                      gap: 8,
+                      padding: '6px 10px',
                       borderRadius: 10,
                       transition: 'background 160ms ease',
                       width: '100%',
-                      border: 'none',
                       background: isCurrent ? 'var(--surface-alt)' : 'transparent',
-                      textAlign: 'left',
-                      cursor: t.previewUrl ? 'pointer' : 'not-allowed',
-                      opacity: t.previewUrl ? 1 : 0.6,
                     }}
-                    onMouseEnter={(e) => {
-                      if (!isCurrent && t.previewUrl) e.currentTarget.style.background = 'var(--surface-hover)';
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isCurrent && t.previewUrl) e.currentTarget.style.background = 'transparent';
-                    }}
-                    title={!t.previewUrl ? "Preview unavailable" : showPlaying ? "Pause preview" : "Play preview"}
                   >
-                    {/* Indexing */}
-                    <span style={{
-                      fontFamily: 'var(--font-mono)',
-                      fontSize: 13,
-                      color: isCurrent ? 'var(--brand-light)' : 'var(--text-faint)',
-                      minWidth: 24,
-                      textAlign: 'right'
-                    }}>
-                      {i + 1}
-                    </span>
+                    <button
+                      onClick={() => playTrack(t)}
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: 12,
+                        flex: 1,
+                        minWidth: 0,
+                        border: 'none',
+                        background: 'transparent',
+                        textAlign: 'left',
+                        cursor: 'pointer',
+                        padding: 0,
+                        color: 'inherit',
+                      }}
+                      title={showPlaying ? "Pause preview" : t.previewUrl ? "Play audio preview" : "Select track"}
+                    >
+                      {/* Indexing */}
+                      <span style={{
+                        fontFamily: 'var(--font-mono)',
+                        fontSize: 13,
+                        color: isCurrent ? 'var(--brand-light)' : 'var(--text-faint)',
+                        minWidth: 24,
+                        textAlign: 'right'
+                      }}>
+                        {i + 1}
+                      </span>
 
-                    {/* Album Art / Play Overlay */}
-                    <div style={{ position: 'relative', width: 38, height: 38, flexShrink: 0 }}>
-                      {t.albumArt ? (
-                        <img src={t.albumArt} alt="" width={38} height={38} style={{ borderRadius: 6, objectFit: 'cover' }} />
-                      ) : (
-                        <div style={{ width: 38, height: 38, borderRadius: 6, background: 'var(--surface-alt)' }} />
-                      )}
-                      {isCurrent && (
+                      {/* Album Art / Play Overlay */}
+                      <div style={{ position: 'relative', width: 38, height: 38, flexShrink: 0 }}>
+                        {t.albumArt ? (
+                          <img src={t.albumArt} alt="" width={38} height={38} style={{ borderRadius: 6, objectFit: 'cover' }} />
+                        ) : (
+                          <div style={{ width: 38, height: 38, borderRadius: 6, background: 'var(--surface-alt)' }} />
+                        )}
+                        {isCurrent && (
+                          <div style={{
+                            position: 'absolute',
+                            inset: 0,
+                            background: 'rgba(15, 17, 23, 0.65)',
+                            borderRadius: 6,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            color: 'var(--brand-light)'
+                          }}>
+                            {showPlaying ? <IconPauseMini /> : <IconPlayMini />}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Meta info */}
+                      <div style={{ minWidth: 0, flex: 1 }}>
                         <div style={{
-                          position: 'absolute',
-                          inset: 0,
-                          background: 'rgba(15, 17, 23, 0.65)',
-                          borderRadius: 6,
-                          display: 'flex',
+                          fontSize: 14,
+                          fontWeight: 600,
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                          color: isCurrent ? 'var(--brand-light)' : 'var(--text)'
+                        }}>
+                          {t.name}
+                        </div>
+                        <div style={{ fontSize: 12.5, color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginTop: 1 }}>
+                          {t.artists}
+                        </div>
+                      </div>
+
+                      {/* Preview action indicator */}
+                      {t.previewUrl && !isCurrent && (
+                        <span style={{ color: 'var(--text-faint)', fontSize: 11, paddingRight: 6 }}>
+                          ▶ Preview
+                        </span>
+                      )}
+                    </button>
+
+                    {spotifyUrl && (
+                      <a
+                        href={spotifyUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: 'inline-flex',
                           alignItems: 'center',
                           justifyContent: 'center',
-                          color: 'var(--brand-light)'
-                        }}>
-                          {showPlaying ? <IconPauseMini /> : <IconPlayMini />}
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Meta info */}
-                    <div style={{ minWidth: 0, flex: 1 }}>
-                      <div style={{
-                        fontSize: 14,
-                        fontWeight: 600,
-                        overflow: 'hidden',
-                        textOverflow: 'ellipsis',
-                        whiteSpace: 'nowrap',
-                        color: isCurrent ? 'var(--brand-light)' : 'var(--text)'
-                      }}>
-                        {t.name}
-                      </div>
-                      <div style={{ fontSize: 12.5, color: 'var(--text-muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginTop: 1 }}>
-                        {t.artists}
-                      </div>
-                    </div>
-
-                    {/* Preview action indicator */}
-                    {t.previewUrl && !isCurrent && (
-                      <span style={{ color: 'var(--text-faint)', fontSize: 11, paddingRight: 6 }}>
-                        ▶ Preview
-                      </span>
+                          padding: '6px',
+                          borderRadius: '50%',
+                          color: '#1DB954',
+                          transition: 'transform 160ms ease, background 160ms ease',
+                          flexShrink: 0,
+                        }}
+                        title="Open full track in Spotify"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.02 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.48-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.281 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.72 1.62.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+                        </svg>
+                      </a>
                     )}
-                  </button>
+                  </div>
                 );
               })}
             </div>

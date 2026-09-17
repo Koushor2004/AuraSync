@@ -1,30 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../utils/api.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import { EMOTIONS, MANUAL_EMOTIONS } from '../utils/emotions.js';
 import AuraRing from '../components/AuraRing.jsx';
 import PageHeader from '../components/PageHeader.jsx';
-import PlaylistCard from '../components/PlaylistCard.jsx';
+import EmotionIcon from '../assets/EmotionIcon.jsx';
 import './Home.css';
 
 export default function Home() {
   const { user, updateUser } = useAuth();
   const navigate = useNavigate();
-  const [playlists, setPlaylists] = useState(null);
   const [loadingMood, setLoadingMood] = useState(false);
   const [error, setError] = useState('');
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await api.get('/spotify/playlists?limit=4');
-        setPlaylists(res.data.playlists);
-      } catch (err) {
-        setError(err.response?.data?.message || 'Could not load home data.');
-      }
-    })();
-  }, []);
 
   const meta = EMOTIONS[user?.currentEmotion] || EMOTIONS.neutral;
   const firstName = user?.name?.split(' ')[0] || 'Listener';
@@ -34,13 +22,7 @@ export default function Home() {
     try {
       const logRes = await api.post('/emotion/log', { emotion: emotionKey, source: 'manual', confidence: 100 });
       updateUser({ currentEmotion: emotionKey, currentAura: logRes.data.aura });
-
-      const recRes = await api.get('/spotify/recommendations', {
-        params: { emotion: emotionKey }
-      });
-      if (recRes.data?.playlist) {
-        setPlaylists((prev) => [recRes.data.playlist, ...(prev || []).slice(0, 3)]);
-      }
+      navigate('/detect');
     } catch (err) {
       setError(err.response?.data?.message || 'Failed to update mood.');
     } finally {
@@ -68,10 +50,10 @@ export default function Home() {
           </p>
           <div className="home-hero-actions">
             <Link to="/detect" className="btn btn-primary">
-              📸 Start Camera Detection
+              Start Camera Detection
             </Link>
             <Link to="/analytics" className="btn btn-secondary">
-              📊 View Aura Trends
+              View Aura Trends
             </Link>
           </div>
         </div>
@@ -79,7 +61,9 @@ export default function Home() {
         <div className="home-aura-visual">
           <AuraRing color="var(--color-iris-glow)" size={160} confidence={94}>
             <div style={{ textAlign: 'center' }}>
-              <div style={{ fontSize: 44, marginBottom: 4 }}>{meta.emoji}</div>
+              <div style={{ marginBottom: 4 }}>
+                <EmotionIcon emotion={user?.currentEmotion || 'neutral'} size={44} />
+              </div>
               <div style={{ fontFamily: 'var(--font-neuemachinainktrap)', fontSize: 11, color: 'var(--color-iris-glow)', letterSpacing: '0.06em' }}>
                 {meta.label.toUpperCase()}
               </div>
@@ -102,7 +86,7 @@ export default function Home() {
         <div className="home-stat-card">
           <span className="home-stat-card__lbl">Current Aura</span>
           <span className="home-stat-card__val" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span>{meta.emoji}</span>
+            <EmotionIcon emotion={user?.currentEmotion || 'neutral'} size={20} />
             <span>{meta.label}</span>
           </span>
         </div>
@@ -130,35 +114,12 @@ export default function Home() {
               onClick={() => triggerQuickMood(key)}
               disabled={loadingMood}
             >
-              <span>{m.emoji}</span>
+              <EmotionIcon emotion={key} size={22} />
               <span>{m.label}</span>
             </button>
           );
         })}
       </div>
-
-      {/* Recommended Playlists */}
-      <div className="home-section-title">
-        <span className="eyebrow-label" style={{ marginBottom: 0 }}>CURATED SOUNDTRACKS</span>
-      </div>
-
-      {!playlists ? (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 24 }}>
-          <div className="skeleton" style={{ height: 220 }} />
-          <div className="skeleton" style={{ height: 220 }} />
-        </div>
-      ) : playlists.length === 0 ? (
-        <div className="card empty-state">
-          <h3>No recommended mixes yet</h3>
-          <p>Scan your face or tap a mood above to generate your first custom soundtrack.</p>
-        </div>
-      ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 24 }}>
-          {playlists.map((p) => (
-            <PlaylistCard key={p._id} playlist={p} />
-          ))}
-        </div>
-      )}
     </div>
   );
 }

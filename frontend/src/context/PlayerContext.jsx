@@ -32,42 +32,64 @@ export function PlayerProvider({ children }) {
       setCurrentTime(0);
     };
 
+    const onError = () => {
+      console.warn('[Audio Player] Stream failed to play.');
+      setIsPlaying(false);
+    };
+
     audio.addEventListener('timeupdate', onTimeUpdate);
     audio.addEventListener('loadedmetadata', onLoadedMetadata);
     audio.addEventListener('ended', onEnded);
+    audio.addEventListener('error', onError);
 
     return () => {
       audio.pause();
       audio.removeEventListener('timeupdate', onTimeUpdate);
       audio.removeEventListener('loadedmetadata', onLoadedMetadata);
       audio.removeEventListener('ended', onEnded);
+      audio.removeEventListener('error', onError);
     };
   }, []);
 
   const playTrack = (track) => {
-    if (!track.previewUrl) {
-      alert("This track doesn't have a preview available.");
-      return;
-    }
-
+    if (!track) return;
     const audio = audioRef.current;
-    if (currentTrack?.spotifyId === track.spotifyId) {
+
+    // Toggle play/pause if already playing the exact same track with preview
+    if (currentTrack?.spotifyId === track.spotifyId && currentTrack?.previewUrl === track.previewUrl) {
       if (isPlaying) {
         audio.pause();
         setIsPlaying(false);
-      } else {
-        audio.play().catch((err) => console.log('Audio playback failed', err));
-        setIsPlaying(true);
+      } else if (track.previewUrl) {
+        audio.play().then(() => setIsPlaying(true)).catch((err) => {
+          console.warn('Playback error', err);
+          setIsPlaying(false);
+        });
       }
-    } else {
-      audio.pause();
+      return;
+    }
+
+    // Changing selected track
+    audio.pause();
+    setCurrentTrack(track);
+    setProgress(0);
+    setCurrentTime(0);
+
+    if (track.previewUrl) {
       audio.src = track.previewUrl;
       audio.load();
-      audio.play().catch((err) => console.log('Audio playback failed', err));
-      setCurrentTrack(track);
-      setIsPlaying(true);
-      setProgress(0);
-      setCurrentTime(0);
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          setIsPlaying(true);
+        }).catch((err) => {
+          console.warn('Preview playback blocked or failed', err);
+          setIsPlaying(false);
+        });
+      }
+    } else {
+      audio.removeAttribute('src');
+      setIsPlaying(false);
     }
   };
 
@@ -76,6 +98,16 @@ export function PlayerProvider({ children }) {
       audioRef.current.pause();
       setIsPlaying(false);
     }
+  };
+
+  const closePlayer = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+    }
+    setIsPlaying(false);
+    setCurrentTrack(null);
+    setProgress(0);
+    setCurrentTime(0);
   };
 
   const seek = (timePercent) => {
@@ -97,6 +129,7 @@ export function PlayerProvider({ children }) {
         duration,
         playTrack,
         pauseTrack,
+        closePlayer,
         seek,
       }}
     >
@@ -106,3 +139,5 @@ export function PlayerProvider({ children }) {
 }
 
 export const usePlayer = () => useContext(PlayerContext);
+
+

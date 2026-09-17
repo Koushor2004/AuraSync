@@ -1,15 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import AuraRing from '../components/AuraRing.jsx';
+import EmotionIcon from '../assets/EmotionIcon.jsx';
 import './Landing.css';
 
 const EMOTION_STRIP = [
-  { emoji: '😄', label: 'Happy' },
-  { emoji: '😌', label: 'Relaxed' },
-  { emoji: '😲', label: 'Surprised' },
-  { emoji: '😔', label: 'Sad' },
-  { emoji: '🤩', label: 'Excited' },
-  { emoji: '😠', label: 'Angry' },
+  { key: 'happy', label: 'Happy' },
+  { key: 'relaxed', label: 'Relaxed' },
+  { key: 'surprised', label: 'Surprised' },
+  { key: 'sad', label: 'Sad' },
+  { key: 'excited', label: 'Excited' },
+  { key: 'angry', label: 'Angry' },
 ];
 
 export default function Landing() {
@@ -92,7 +93,7 @@ export default function Landing() {
         <section className="landing__strip">
           {EMOTION_STRIP.map((e) => (
             <div key={e.label} className="landing__strip-item">
-              <span>{e.emoji}</span>
+              <EmotionIcon emotion={e.key} size={22} />
               <span>{e.label}</span>
             </div>
           ))}

@@ -53,8 +53,9 @@
 }
 
 .sidebar__link:hover {
-  text-decoration: underline;
-  color: #ffffff;
+  text-decoration: none;
+  background-color: var(--surface-hover);
+  color: var(--color-carbon-vellum);
 }
 
 .sidebar__link--active {
@@ -64,8 +65,17 @@
   text-decoration: none !important;
 }
 
+.sidebar__link--active:hover {
+  background-color: var(--color-carbon-vellum);
+  color: var(--color-obsidian);
+}
+
 .sidebar__link--active svg {
   stroke: var(--color-obsidian) !important;
+}
+
+.sidebar__link svg {
+  stroke: currentColor;
 }
 
 .sidebar__footer {

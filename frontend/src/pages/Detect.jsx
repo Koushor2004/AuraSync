@@ -2,10 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as faceapi from 'face-api.js';
 import api from '../utils/api.js';
 import { useAuth } from '../context/AuthContext.jsx';
-import { EMOTIONS, FACE_API_TO_EMOTION, MANUAL_EMOTIONS } from '../utils/emotions.js';
-import PageHeader from '../components/PageHeader.jsx';
+import { EMOTIONS, MANUAL_EMOTIONS } from '../utils/emotions.js';
 import AuraRing from '../components/AuraRing.jsx';
+import PageHeader from '../components/PageHeader.jsx';
 import PlaylistCard from '../components/PlaylistCard.jsx';
+import EmotionIcon from '../assets/EmotionIcon.jsx';
 import './Detect.css';
 
 const MODEL_URL = '/models';
@@ -202,7 +203,7 @@ export default function Detect() {
 
       {error && <div className="form-alert">{error}</div>}
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, alignItems: 'start' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(260px, 320px) 1fr', gap: 28, alignItems: 'start' }}>
         <div>
           {tab === 'camera' ? (
             <div className="camera-frame">
@@ -235,16 +236,16 @@ export default function Detect() {
                     </>
                   ) : permission === 'denied' ? (
                     <>
-                      <p style={{ fontWeight: 500 }}>Camera access denied</p>
-                      <p style={{ fontSize: 13, color: 'var(--color-smoke)' }}>
+                      <p style={{ fontWeight: 500, color: '#ffffff' }}>Camera Access Error</p>
+                      <p style={{ fontSize: 13, color: 'rgba(255, 255, 255, 0.8)' }}>
                         Enable camera permission in your browser settings, or switch to manual selection.
                       </p>
                       <button className="btn btn-secondary btn-sm" onClick={startCamera}>Try again</button>
                     </>
                   ) : (
                     <>
-                      <p style={{ fontWeight: 500 }}>Camera is off</p>
-                      <p style={{ fontSize: 13, color: 'var(--color-smoke)', maxWidth: 280 }}>
+                      <p style={{ fontWeight: 500, color: '#ffffff', fontSize: 18 }}>Camera is off</p>
+                      <p style={{ fontSize: 13.5, color: 'rgba(255, 255, 255, 0.8)', maxWidth: 300, lineHeight: 1.4 }}>
                         We process a single frame locally in-browser — nothing is ever uploaded.
                       </p>
                       <button className="btn btn-primary btn-sm" onClick={startCamera}>Enable Camera</button>
@@ -264,16 +265,16 @@ export default function Detect() {
               {permission === 'granted' && captured && analyzing && (
                 <div className="camera-frame__overlay">
                   <AuraRing color="var(--color-iris-glow)" size={54} confidence={60} spinning />
-                  <p style={{ fontSize: 13, color: 'var(--color-smoke)' }}>Analyzing photo…</p>
+                  <p style={{ fontSize: 13, color: 'rgba(255, 255, 255, 0.85)' }}>Analyzing photo…</p>
                 </div>
               )}
 
               {permission === 'granted' && captured && !analyzing && liveResult && (
                 <div className="camera-frame__badge">
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <span style={{ fontSize: 24 }}>{meta?.emoji}</span>
+                    <EmotionIcon emotion={liveResult?.emotion || 'neutral'} size={26} />
                     <div>
-                      <div style={{ fontWeight: 500, fontSize: 14, color: 'var(--color-carbon-vellum)' }}>{meta?.label}</div>
+                      <div style={{ fontWeight: 500, fontSize: 14, color: '#ffffff' }}>{meta?.label}</div>
                       <div style={{ fontSize: 11, color: 'var(--color-iris-glow)', fontFamily: 'var(--font-neuemachinainktrap)' }}>
                         {liveResult.confidence}% CONFIDENCE
                       </div>
@@ -288,7 +289,7 @@ export default function Detect() {
               {permission === 'granted' && captured && !analyzing && !liveResult && error && (
                 <div className="camera-frame__overlay">
                   <p style={{ color: 'var(--e-angry)', fontWeight: 500 }}>Detection Failed</p>
-                  <p style={{ fontSize: 13, color: 'var(--color-smoke)', textAlign: 'center', maxWidth: 280 }}>
+                  <p style={{ fontSize: 13, color: 'rgba(255, 255, 255, 0.8)', textAlign: 'center', maxWidth: 280 }}>
                     We couldn't detect a face in the captured frame.
                   </p>
                   <button className="btn btn-primary btn-sm" onClick={resetCamera} style={{ marginTop: 8 }}>
@@ -310,7 +311,7 @@ export default function Detect() {
                       submitMood(key, 'manual');
                     }}
                   >
-                    <span className="mood-btn__emoji">{m.emoji}</span>
+                    <EmotionIcon emotion={key} size={32} />
                     <span className="mood-btn__label">{m.label}</span>
                   </button>
                 );
@@ -357,11 +358,11 @@ export default function Detect() {
             )}
           </div>
           {saving ? (
-            <div className="skeleton" style={{ height: 260 }} />
+            <div className="skeleton" style={{ height: 440, borderRadius: 'var(--radius-cards)' }} />
           ) : resultPlaylist ? (
-            <PlaylistCard playlist={resultPlaylist} />
+            <PlaylistCard playlist={resultPlaylist} maxHeight={380} />
           ) : (
-            <div className="card empty-state">
+            <div className="card empty-state" style={{ height: 440, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
               <h3>Waiting on a mood</h3>
               <p>Detect or select an emotion to generate a playlist matched to it.</p>
             </div>

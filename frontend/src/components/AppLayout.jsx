@@ -26,6 +26,7 @@ export default function AppLayout({ children }) {
     duration,
     playTrack,
     pauseTrack,
+    closePlayer,
     seek
   } = usePlayer();
 
@@ -90,41 +91,41 @@ export default function AppLayout({ children }) {
         {children}
 
         {currentTrack && (
-          <div className="audio-player-bar">
-            <div className="audio-player-bar__info">
-              {currentTrack.albumArt ? (
-                <img src={currentTrack.albumArt} alt="" className="audio-player-bar__art" />
-              ) : (
-                <div className="audio-player-bar__art-placeholder" />
+          <div className="audio-player-bar" style={{ flexDirection: 'column', alignItems: 'stretch', padding: '10px 16px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 10, width: '100%', marginBottom: 6 }}>
+              {(currentTrack.externalUrl || currentTrack.spotifyId) && (
+                <a
+                  href={currentTrack.externalUrl || `https://open.spotify.com/track/${currentTrack.spotifyId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-secondary btn-sm"
+                  style={{ borderRadius: 'var(--radius-pills)', textDecoration: 'none', gap: 6, fontSize: 12.5 }}
+                  title="Open and play full song on Spotify"
+                >
+                  <span style={{ color: '#1DB954', fontSize: 14 }}>🟢</span>
+                  <span>Play Full Track on Spotify</span>
+                </a>
               )}
-              <div className="audio-player-bar__meta">
-                <span className="audio-player-bar__name">{currentTrack.name}</span>
-                <span className="audio-player-bar__artist">{currentTrack.artists}</span>
-              </div>
-            </div>
 
-            <div className="audio-player-bar__controls">
-              <button className="audio-player-bar__btn" onClick={() => playTrack(currentTrack)}>
-                {isPlaying ? <IconPauseBar /> : <IconPlayBar />}
+              <button className="audio-player-bar__close" onClick={closePlayer} aria-label="Close player">
+                <IconCloseBar />
               </button>
-
-              <div className="audio-player-bar__progress-container">
-                <span className="audio-player-bar__time">{formatTime(currentTime)}</span>
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={progress}
-                  onChange={(e) => seek(Number(e.target.value))}
-                  className="audio-player-bar__slider"
-                />
-                <span className="audio-player-bar__time">{formatTime(duration)}</span>
-              </div>
             </div>
 
-            <button className="audio-player-bar__close" onClick={pauseTrack}>
-              <IconCloseBar />
-            </button>
+            {currentTrack.spotifyId && !currentTrack.spotifyId.startsWith('mock_') && (
+              <div style={{ borderRadius: 10, overflow: 'hidden' }}>
+                <iframe
+                  src={`https://open.spotify.com/embed/track/${currentTrack.spotifyId}?utm_source=generator&theme=0`}
+                  width="100%"
+                  height="80"
+                  frameBorder="0"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"
+                  title={`Spotify Player - ${currentTrack.name}`}
+                  style={{ borderRadius: 8 }}
+                />
+              </div>
+            )}
           </div>
         )}
       </div>

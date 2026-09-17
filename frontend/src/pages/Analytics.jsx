@@ -14,8 +14,9 @@ import {
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import api from '../utils/api.js';
-import { EMOTIONS } from '../utils/emotions.js';
+import { EMOTIONS, resolvedColor } from '../utils/emotions.js';
 import PageHeader from '../components/PageHeader.jsx';
+import EmotionIcon from '../assets/EmotionIcon.jsx';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, PointElement, LineElement, ArcElement, Tooltip, Legend);
 
@@ -143,7 +144,7 @@ export default function Analytics() {
             <span className="card-title">DOMINANT EMOTIONAL STATE</span>
             {summary.mostCommonEmotion ? (
               <div style={{ display: 'flex', alignItems: 'center', gap: 20, padding: '32px 12px' }}>
-                <div style={{ fontSize: 60 }}>{EMOTIONS[summary.mostCommonEmotion]?.emoji}</div>
+                <EmotionIcon emotion={summary.mostCommonEmotion} size={60} />
                 <div>
                   <div style={{ fontSize: 26, fontWeight: 400, color: 'var(--color-carbon-vellum)' }}>
                     {EMOTIONS[summary.mostCommonEmotion]?.label}

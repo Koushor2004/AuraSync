@@ -12,7 +12,7 @@
   --color-twilight: #4f4f80;
   --color-specter-lilac: #dedfee;
 
-  /* Legacy Mapping for compatibility */
+  /* Legacy Mapping */
   --brand: var(--color-iris-glow);
   --brand-light: var(--color-specter-lilac);
   --brand-dark: var(--color-twilight);
@@ -65,7 +65,6 @@
   --font-weight-semibold: 600;
 
   /* Spacing */
-  --spacing-unit: 8px;
   --spacing-8: 8px;
   --spacing-16: 16px;
   --spacing-24: 24px;
@@ -74,16 +73,10 @@
   --spacing-48: 48px;
   --spacing-56: 56px;
   --spacing-80: 80px;
-  --spacing-96: 96px;
-  --spacing-144: 144px;
-  --spacing-160: 160px;
-  --spacing-176: 176px;
 
   /* Layout */
   --page-max-width: 1280px;
-  --section-gap: 80px;
   --card-padding: 24px;
-  --element-gap: 24px;
 
   /* Border Radius */
   --radius-sm: 4px;
@@ -99,7 +92,7 @@
   --radius-dividers: 1px;
   --radius-featurecards: 24px;
 
-  /* Surfaces & Canvas */
+  /* Default Dark Mode Surfaces */
   --surface-cosmic-canvas: #0a0a13;
   --surface-nav-veil: #040407;
   --surface-product-surface: #08080c;
@@ -116,19 +109,38 @@
   --text-muted: var(--color-smoke);
   --text-faint: var(--color-ash);
 
-  --halo-shadow: 0 0 60px rgba(79, 79, 128, 0.15);
-
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
   --dur: 220ms;
 }
 
-[data-theme='light'], [data-theme='dark'] {
-  /* Enforce cosmic dark projection room aesthetic in both modes */
+/* ---------- LIGHT MODE OVERRIDES ---------- */
+[data-theme='light'] {
+  --color-carbon-vellum: #0b0c16;
+  --color-obsidian: #f4f5fa;
+  --color-pitch: #ffffff;
+  --color-void: #eaeafa;
+  --color-graphite: #ffffff;
+  --color-smoke: #52556e;
+  --color-ash: #787c99;
+  --color-charcoal: #d6d9eb;
+  --color-iris-glow: #2563eb;
+  --color-twilight: #cbd5e1;
+  --color-specter-lilac: #1e293b;
+
+  --brand: var(--color-iris-glow);
+  --brand-light: #3b82f6;
+  --brand-dark: #1d4ed8;
+
+  --surface-cosmic-canvas: #f4f5fa;
+  --surface-nav-veil: #ffffff;
+  --surface-product-surface: #ffffff;
+  --surface-card-halo: #e0e7ff;
+
   --bg: var(--surface-cosmic-canvas);
   --bg-elevated: var(--surface-product-surface);
   --surface: var(--surface-product-surface);
-  --surface-hover: #12121c;
-  --surface-alt: #0e0f18;
+  --surface-hover: #f1f3f9;
+  --surface-alt: #eef1f8;
   --border: var(--color-twilight);
   --border-strong: var(--color-charcoal);
   --text: var(--color-carbon-vellum);
@@ -144,17 +156,24 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background-color: var(--color-obsidian);
+  background-color: var(--surface-cosmic-canvas);
   color: var(--color-carbon-vellum);
   font-family: var(--font-framegothic);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
 }
 
 #root {
   min-height: 100vh;
   background: radial-gradient(circle at 50% 100%, #000b35 0%, transparent 60%),
               linear-gradient(195deg, #0a0010 0%, #02000a 40%, #0c1d32 100%);
+  background-attachment: fixed;
+}
+
+[data-theme='light'] #root {
+  background: radial-gradient(circle at 50% 0%, #e0e7ff 0%, transparent 65%),
+              linear-gradient(180deg, #f4f5fa 0%, #e6ecfa 100%);
   background-attachment: fixed;
 }
 
@@ -180,7 +199,7 @@ button {
 
 ::selection {
   background: var(--color-iris-glow);
-  color: var(--color-pitch);
+  color: #ffffff;
 }
 
 :focus-visible {
@@ -195,16 +214,16 @@ button {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-void);
+  background: var(--surface-nav-veil);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-charcoal);
+  background: var(--color-twilight);
   border-radius: 100px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-twilight);
+  background: var(--color-iris-glow);
 }
 
 @media (prefers-reduced-motion: reduce) {

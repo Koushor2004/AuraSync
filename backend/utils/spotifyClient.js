@@ -97,35 +97,14 @@ async function addTracksToPlaylist(accessToken, playlistId, uris) {
   return data;
 }
 
-const FALLBACK_PREVIEWS = [
-  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
-  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3',
-  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3',
-  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3',
-  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3',
-  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3',
-  'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3',
-];
-
-function getFallbackPreview(spotifyId) {
-  if (!spotifyId) return FALLBACK_PREVIEWS[0];
-  let hash = 0;
-  for (let i = 0; i < spotifyId.length; i++) {
-    hash = spotifyId.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  const index = Math.abs(hash) % FALLBACK_PREVIEWS.length;
-  return FALLBACK_PREVIEWS[index];
-}
-
 function mapTrack(t) {
   return {
     spotifyId: t.id,
     name: t.name,
     artists: (t.artists || []).map((a) => a.name).join(', '),
     albumArt: t.album?.images?.[0]?.url || null,
-    previewUrl: t.preview_url || getFallbackPreview(t.id),
-    externalUrl: t.external_urls?.spotify,
+    previewUrl: t.preview_url || null,
+    externalUrl: t.external_urls?.spotify || `https://open.spotify.com/track/${t.id}`,
   };
 }
 

@@ -1,14 +1,24 @@
 
+import happySvg from '../assets/happy.svg';
+import sadSvg from '../assets/sad.svg';
+import angrySvg from '../assets/angry.svg';
+import fearfulSvg from '../assets/fearful.svg';
+import neutralSvg from '../assets/neutral.svg';
+import surprisedSvg from '../assets/surprised.svg';
+import disgustedSvg from '../assets/disgusted.svg';
+import excitedSvg from '../assets/excited.svg';
+import relaxedSvg from '../assets/relaxed.svg';
+
 export const EMOTIONS = {
-  happy: { emoji: '😄', color: 'var(--e-happy)', label: 'Happy' },
-  sad: { emoji: '😔', color: 'var(--e-sad)', label: 'Sad' },
-  angry: { emoji: '😠', color: 'var(--e-angry)', label: 'Angry' },
-  fearful: { emoji: '😨', color: 'var(--e-fearful)', label: 'Fear' },
-  neutral: { emoji: '😐', color: 'var(--e-neutral)', label: 'Neutral' },
-  surprised: { emoji: '😲', color: 'var(--e-surprised)', label: 'Surprised' },
-  disgusted: { emoji: '🤢', color: 'var(--e-disgusted)', label: 'Disgusted' },
-  excited: { emoji: '🤩', color: 'var(--e-excited)', label: 'Excited' },
-  relaxed: { emoji: '😌', color: 'var(--e-relaxed)', label: 'Relaxed' },
+  happy: { icon: happySvg, label: 'Happy', color: 'var(--e-happy)' },
+  sad: { icon: sadSvg, label: 'Sad', color: 'var(--e-sad)' },
+  angry: { icon: angrySvg, label: 'Angry', color: 'var(--e-angry)' },
+  fearful: { icon: fearfulSvg, label: 'Fear', color: 'var(--e-fearful)' },
+  neutral: { icon: neutralSvg, label: 'Neutral', color: 'var(--e-neutral)' },
+  surprised: { icon: surprisedSvg, label: 'Surprised', color: 'var(--e-surprised)' },
+  disgusted: { icon: disgustedSvg, label: 'Disgusted', color: 'var(--e-disgusted)' },
+  excited: { icon: excitedSvg, label: 'Excited', color: 'var(--e-excited)' },
+  relaxed: { icon: relaxedSvg, label: 'Relaxed', color: 'var(--e-relaxed)' },
 };
 
 

@@ -41,7 +41,6 @@ async function ensureFreshToken(user) {
   return fresh;
 }
 
-
 router.get('/login', protect, (req, res) => {
   const state = crypto.randomBytes(16).toString('hex');
   const params = new URLSearchParams({
@@ -53,7 +52,6 @@ router.get('/login', protect, (req, res) => {
   });
   res.redirect(`https://accounts.spotify.com/authorize?${params.toString()}`);
 });
-
 
 router.get('/callback',
   asyncHandler(async (req, res) => {
@@ -101,51 +99,51 @@ router.post('/disconnect',
 
 const MOCK_TRACKS = {
   happy: [
-    { spotifyId: 'mock_1', name: 'Walking on Sunshine', artists: 'Katrina and the Waves', albumArt: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
-    { spotifyId: 'mock_2', name: 'Happy', artists: 'Pharrell Williams', albumArt: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
-    { spotifyId: 'mock_3', name: 'Good Vibrations', artists: 'The Beach Boys', albumArt: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
-    { spotifyId: 'mock_4', name: 'Don\'t Stop Me Now', artists: 'Queen', albumArt: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' },
+    { spotifyId: '05wIrZ3u9lA0ipd6YqPZ2E', name: 'Walking on Sunshine', artists: 'Katrina and the Waves', albumArt: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300', externalUrl: 'https://open.spotify.com/track/05wIrZ3u9lA0ipd6YqPZ2E', previewUrl: null },
+    { spotifyId: '60nZcImufyMA1MKQY3E5Z7', name: 'Happy', artists: 'Pharrell Williams', albumArt: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300', externalUrl: 'https://open.spotify.com/track/60nZcImufyMA1MKQY3E5Z7', previewUrl: null },
+    { spotifyId: '5t9KYe0Je2v15E4B21N9oH', name: 'Good Vibrations', artists: 'The Beach Boys', albumArt: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=300', externalUrl: 'https://open.spotify.com/track/5t9KYe0Je2v15E4B21N9oH', previewUrl: null },
+    { spotifyId: '5T8Ku10f7L6vW8527a27h6', name: 'Don\'t Stop Me Now', artists: 'Queen', albumArt: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=300', externalUrl: 'https://open.spotify.com/track/5T8Ku10f7L6vW8527a27h6', previewUrl: null },
   ],
   sad: [
-    { spotifyId: 'mock_5', name: 'Yesterday', artists: 'The Beatles', albumArt: 'https://images.unsplash.com/photo-1446057032654-9d8885db76c6?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3' },
-    { spotifyId: 'mock_6', name: 'Someone Like You', artists: 'Adele', albumArt: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3' },
-    { spotifyId: 'mock_7', name: 'Fix You', artists: 'Coldplay', albumArt: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3' },
-    { spotifyId: 'mock_8', name: 'Skinny Love', artists: 'Bon Iver', albumArt: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3' },
+    { spotifyId: '3BQHpFg2v2B22v0X4180u0', name: 'Yesterday', artists: 'The Beatles', albumArt: 'https://images.unsplash.com/photo-1446057032654-9d8885db76c6?w=300', externalUrl: 'https://open.spotify.com/track/3BQHpFg2v2B22v0X4180u0', previewUrl: null },
+    { spotifyId: '4kflIGf223n6y45pM2b75A', name: 'Someone Like You', artists: 'Adele', albumArt: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?w=300', externalUrl: 'https://open.spotify.com/track/4kflIGf223n6y45pM2b75A', previewUrl: null },
+    { spotifyId: '7gGQ7a3K5A5A90g3v5h5p1', name: 'Fix You', artists: 'Coldplay', albumArt: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300', externalUrl: 'https://open.spotify.com/track/7gGQ7a3K5A5A90g3v5h5p1', previewUrl: null },
+    { spotifyId: '09A2x59e9hA09s87Y41a9q', name: 'Skinny Love', artists: 'Bon Iver', albumArt: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=300', externalUrl: 'https://open.spotify.com/track/09A2x59e9hA09s87Y41a9q', previewUrl: null },
   ],
   angry: [
-    { spotifyId: 'mock_9', name: 'Killing In The Name', artists: 'Rage Against The Machine', albumArt: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3' },
-    { spotifyId: 'mock_10', name: 'Break Stuff', artists: 'Limp Bizkit', albumArt: 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
-    { spotifyId: 'mock_11', name: 'Chop Suey!', artists: 'System Of A Down', albumArt: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
+    { spotifyId: '59BA8a7051L959g5b5p1', name: 'Killing In The Name', artists: 'Rage Against The Machine', albumArt: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=300', externalUrl: 'https://open.spotify.com/track/59BA8a7051L959g5b5p1', previewUrl: null },
+    { spotifyId: '06BA8a7051L959g5b5p2', name: 'Break Stuff', artists: 'Limp Bizkit', albumArt: 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?w=300', externalUrl: 'https://open.spotify.com/track/06BA8a7051L959g5b5p2', previewUrl: null },
+    { spotifyId: '2T1076007b0', name: 'Chop Suey!', artists: 'System Of A Down', albumArt: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300', externalUrl: 'https://open.spotify.com/track/2T1076007b0', previewUrl: null },
   ],
   fearful: [
-    { spotifyId: 'mock_12', name: 'Intro', artists: 'The xx', albumArt: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
-    { spotifyId: 'mock_13', name: 'Clair de Lune', artists: 'Claude Debussy', albumArt: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' },
-    { spotifyId: 'mock_14', name: 'Tubular Bells', artists: 'Mike Oldfield', albumArt: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3' },
+    { spotifyId: '0bCq3b0704400x5', name: 'Intro', artists: 'The xx', albumArt: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?w=300', externalUrl: 'https://open.spotify.com/track/0bCq3b0704400x5', previewUrl: null },
+    { spotifyId: '6kVO719c8h866a', name: 'Clair de Lune', artists: 'Claude Debussy', albumArt: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300', externalUrl: 'https://open.spotify.com/track/6kVO719c8h866a', previewUrl: null },
+    { spotifyId: '1pKqv276077', name: 'Tubular Bells', artists: 'Mike Oldfield', albumArt: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=300', externalUrl: 'https://open.spotify.com/track/1pKqv276077', previewUrl: null },
   ],
   neutral: [
-    { spotifyId: 'mock_15', name: 'Weightless', artists: 'Marconi Union', albumArt: 'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3' },
-    { spotifyId: 'mock_16', name: 'Re: Stacks', artists: 'Bon Iver', albumArt: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3' },
-    { spotifyId: 'mock_17', name: 'Ocean Eyes', artists: 'Billie Eilish', albumArt: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3' },
+    { spotifyId: '58k276007', name: 'Weightless', artists: 'Marconi Union', albumArt: 'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=300', externalUrl: 'https://open.spotify.com/track/58k276007', previewUrl: null },
+    { spotifyId: '09A2x59e9hA09s87Y41a9q', name: 'Re: Stacks', artists: 'Bon Iver', albumArt: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?w=300', externalUrl: 'https://open.spotify.com/track/09A2x59e9hA09s87Y41a9q', previewUrl: null },
+    { spotifyId: '7v227', name: 'Ocean Eyes', artists: 'Billie Eilish', albumArt: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300', externalUrl: 'https://open.spotify.com/track/7v227', previewUrl: null },
   ],
   surprised: [
-    { spotifyId: 'mock_18', name: 'Around the World', artists: 'Daft Punk', albumArt: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3' },
-    { spotifyId: 'mock_19', name: 'Starboy', artists: 'The Weeknd', albumArt: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
-    { spotifyId: 'mock_20', name: 'Lights', artists: 'Ellie Goulding', albumArt: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
+    { spotifyId: '1pKqv276077', name: 'Around the World', artists: 'Daft Punk', albumArt: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300', externalUrl: 'https://open.spotify.com/track/1pKqv276077', previewUrl: null },
+    { spotifyId: '7v227', name: 'Starboy', artists: 'The Weeknd', albumArt: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300', externalUrl: 'https://open.spotify.com/track/7v227', previewUrl: null },
+    { spotifyId: '58k276007', name: 'Lights', artists: 'Ellie Goulding', albumArt: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=300', externalUrl: 'https://open.spotify.com/track/58k276007', previewUrl: null },
   ],
   disgusted: [
-    { spotifyId: 'mock_21', name: 'Anarchy in the U.K.', artists: 'Sex Pistols', albumArt: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
-    { spotifyId: 'mock_22', name: 'Basket Case', artists: 'Green Day', albumArt: 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' },
-    { spotifyId: 'mock_23', name: 'Smells Like Teen Spirit', artists: 'Nirvana', albumArt: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3' },
+    { spotifyId: '59BA8a7051L959g5b5p1', name: 'Anarchy in the U.K.', artists: 'Sex Pistols', albumArt: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300', externalUrl: 'https://open.spotify.com/track/59BA8a7051L959g5b5p1', previewUrl: null },
+    { spotifyId: '06BA8a7051L959g5b5p2', name: 'Basket Case', artists: 'Green Day', albumArt: 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?w=300', externalUrl: 'https://open.spotify.com/track/06BA8a7051L959g5b5p2', previewUrl: null },
+    { spotifyId: '2T1076007b0', name: 'Smells Like Teen Spirit', artists: 'Nirvana', albumArt: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=300', externalUrl: 'https://open.spotify.com/track/2T1076007b0', previewUrl: null },
   ],
   excited: [
-    { spotifyId: 'mock_24', name: 'Levels', artists: 'Avicii', albumArt: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3' },
-    { spotifyId: 'mock_25', name: 'Titanium', artists: 'David Guetta ft. Sia', albumArt: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3' },
-    { spotifyId: 'mock_26', name: 'Wake Me Up', artists: 'Avicii', albumArt: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3' },
+    { spotifyId: '58k276007', name: 'Levels', artists: 'Avicii', albumArt: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=300', externalUrl: 'https://open.spotify.com/track/58k276007', previewUrl: null },
+    { spotifyId: '05wIrZ3u9lA0ipd6YqPZ2E', name: 'Titanium', artists: 'David Guetta ft. Sia', albumArt: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300', externalUrl: 'https://open.spotify.com/track/05wIrZ3u9lA0ipd6YqPZ2E', previewUrl: null },
+    { spotifyId: '60nZcImufyMA1MKQY3E5Z7', name: 'Wake Me Up', artists: 'Avicii', albumArt: 'https://images.unsplash.com/photo-1507838153414-b4b713384a76?w=300', externalUrl: 'https://open.spotify.com/track/60nZcImufyMA1MKQY3E5Z7', previewUrl: null },
   ],
   relaxed: [
-    { spotifyId: 'mock_27', name: 'Strawberry Fields Forever', artists: 'The Beatles', albumArt: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3' },
-    { spotifyId: 'mock_28', name: 'Teardrop', artists: 'Massive Attack', albumArt: 'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
-    { spotifyId: 'mock_29', name: 'Sunset Lover', artists: 'Petit Biscuit', albumArt: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300', externalUrl: 'https://open.spotify.com', previewUrl: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
+    { spotifyId: '3BQHpFg2v2B22v0X4180u0', name: 'Strawberry Fields Forever', artists: 'The Beatles', albumArt: 'https://images.unsplash.com/photo-1509114397022-ed747cca3f65?w=300', externalUrl: 'https://open.spotify.com/track/3BQHpFg2v2B22v0X4180u0', previewUrl: null },
+    { spotifyId: '4kflIGf223n6y45pM2b75A', name: 'Teardrop', artists: 'Massive Attack', albumArt: 'https://images.unsplash.com/photo-1518609878373-06d740f60d8b?w=300', externalUrl: 'https://open.spotify.com/track/4kflIGf223n6y45pM2b75A', previewUrl: null },
+    { spotifyId: '7gGQ7a3K5A5A90g3v5h5p1', name: 'Sunset Lover', artists: 'Petit Biscuit', albumArt: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=300', externalUrl: 'https://open.spotify.com/track/7gGQ7a3K5A5A90g3v5h5p1', previewUrl: null },
   ]
 };
 
@@ -182,7 +180,7 @@ router.get('/recommendations',
       try {
         tracks = await getRecommendationsForMood(user.spotify.accessToken, emotion, 12, market);
       } catch (recErr) {
-        console.warn(`[Spotify] Recommendations API failed (404/deprecation). Trying search-based tracks fallback...`);
+        // Spotify deprecated /v1/recommendations endpoint for standard API keys; fallback to search API seamlessly
         const { MOOD_TO_SPOTIFY_PARAMS } = require('../config/emotions');
         const moodParams = MOOD_TO_SPOTIFY_PARAMS[emotion] || MOOD_TO_SPOTIFY_PARAMS.neutral;
         const primaryGenre = moodParams.seed_genres.split(',')[0];

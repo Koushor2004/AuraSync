@@ -6,6 +6,7 @@ import { EMOTIONS } from '../utils/emotions.js';
 import AuraRing from '../components/AuraRing.jsx';
 import PageHeader from '../components/PageHeader.jsx';
 import PlaylistCard from '../components/PlaylistCard.jsx';
+import EmotionIcon from '../assets/EmotionIcon.jsx';
 
 export default function Dashboard() {
   const { user } = useAuth();
@@ -52,7 +53,7 @@ export default function Dashboard() {
           <span className="eyebrow-label" style={{ alignSelf: 'flex-start' }}>CURRENT AURA</span>
           <AuraRing color="var(--color-iris-glow)" size={144} confidence={92}>
             <div>
-              <div style={{ fontSize: 44 }}>{meta.emoji}</div>
+              <EmotionIcon emotion={user?.currentEmotion || 'neutral'} size={44} />
             </div>
           </AuraRing>
           <div>
@@ -93,7 +94,7 @@ export default function Dashboard() {
                     }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                      <span style={{ fontSize: 20 }}>{m.emoji}</span>
+                      <EmotionIcon emotion={log.emotion} size={20} />
                       <div>
                         <div style={{ fontWeight: 400, fontSize: 14, color: 'var(--color-carbon-vellum)' }}>{m.label}</div>
                         <div style={{ fontSize: 12, color: 'var(--color-smoke)' }}>

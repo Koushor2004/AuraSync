@@ -76,13 +76,13 @@ export default function Settings() {
             className={`btn ${theme === 'dark' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => changeTheme('dark')}
           >
-            🌙 Midnight Projection Suite
+            🌙 Dark Mode
           </button>
           <button
             className={`btn ${theme === 'light' ? 'btn-primary' : 'btn-secondary'}`}
             onClick={() => changeTheme('light')}
           >
-            ☀️ Standard Theme
+            ☀️ Light Mode
           </button>
         </div>
       </div>
