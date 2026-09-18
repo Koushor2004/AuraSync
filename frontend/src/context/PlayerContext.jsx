@@ -55,7 +55,7 @@ export function PlayerProvider({ children }) {
     if (!track) return;
     const audio = audioRef.current;
 
-    // Toggle play/pause if already playing the exact same track with preview
+
     if (currentTrack?.spotifyId === track.spotifyId && currentTrack?.previewUrl === track.previewUrl) {
       if (isPlaying) {
         audio.pause();
@@ -69,7 +69,6 @@ export function PlayerProvider({ children }) {
       return;
     }
 
-    // Changing selected track
     audio.pause();
     setCurrentTrack(track);
     setProgress(0);

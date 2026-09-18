@@ -10,7 +10,6 @@ const EMOTIONS = {
   relaxed: { emoji: '😌', color: '#2DD4BF', label: 'Relaxed' },
 };
 
-// Maps a detected/selected emotion to Spotify recommendation seed parameters.
 const MOOD_TO_SPOTIFY_PARAMS = {
   happy: { seed_genres: 'pop,dance', target_valence: 0.85, target_energy: 0.7, target_tempo: 120 },
   sad: { seed_genres: 'acoustic,piano', target_valence: 0.2, target_energy: 0.25, target_tempo: 75 },

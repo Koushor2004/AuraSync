@@ -34,7 +34,7 @@ router.get(
         },
         { $sort: { '_id.month': 1 } },
       ]),
-      // All-time most common emotion
+
       EmotionLog.aggregate([
         { $match: { user: userId } },
         { $group: { _id: '$emotion', count: { $sum: 1 } } },

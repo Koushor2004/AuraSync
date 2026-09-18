@@ -1,6 +1,5 @@
 const { validationResult } = require('express-validator');
 
-// Runs after express-validator chains; returns 422 with field-level errors
 const validate = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {

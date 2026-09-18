@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import * as faceapi from 'face-api.js';
 import api from '../utils/api.js';
 import { useAuth } from '../context/AuthContext.jsx';
-import { EMOTIONS, MANUAL_EMOTIONS } from '../utils/emotions.js';
+import { EMOTIONS, FACE_API_TO_EMOTION, MANUAL_EMOTIONS } from '../utils/emotions.js';
 import AuraRing from '../components/AuraRing.jsx';
 import PageHeader from '../components/PageHeader.jsx';
 import PlaylistCard from '../components/PlaylistCard.jsx';
@@ -97,9 +97,15 @@ export default function Detect() {
     stopCamera();
 
     try {
-      const detection = await faceapi
-        .detectSingleFace(canvas, new faceapi.TinyFaceDetectorOptions())
+      let detection = await faceapi
+        .detectSingleFace(canvas, new faceapi.TinyFaceDetectorOptions({ inputSize: 512, scoreThreshold: 0.15 }))
         .withFaceExpressions();
+
+      if (!detection) {
+        detection = await faceapi
+          .detectSingleFace(canvas, new faceapi.TinyFaceDetectorOptions({ inputSize: 224, scoreThreshold: 0.05 }))
+          .withFaceExpressions();
+      }
 
       if (!detection) {
         setLiveResult(null);
@@ -111,14 +117,14 @@ export default function Detect() {
       const expressions = detection.expressions;
       const [topKey, topScore] = Object.entries(expressions).sort((a, b) => b[1] - a[1])[0];
       const emotion = FACE_API_TO_EMOTION[topKey] || 'neutral';
-      const confidence = Math.round(topScore * 100);
+      const confidence = Math.round((topScore || 0) * 100);
 
       setLiveResult({ emotion, confidence });
       setAnalyzing(false);
 
       await submitMood(emotion, 'camera', confidence);
     } catch (err) {
-      console.error(err);
+      console.error('Face detection error:', err);
       setError('An error occurred during face detection.');
       setAnalyzing(false);
     }
